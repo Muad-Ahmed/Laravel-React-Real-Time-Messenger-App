@@ -18,14 +18,14 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-    'name',
-    'email',
-    'password',
-    'avatar',
-    'is_admin',
-    'blocked_at',
-    'email_verified_at'
-];
+        'name',
+        'email',
+        'password',
+        'avatar',
+        'is_admin',
+        'blocked_at',
+        'email_verified_at'
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -48,5 +48,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'group_users');
     }
 }
