@@ -5,20 +5,41 @@ const ChatLayout = ({ children }) => {
     const page = usePage();
     const conversations = page.props.conversations;
     const selectedConversation = page.props.selectedConversation;
+    const [onlineUsers, setOnlineUsers] = useState({});
+
+    const isUserOnline = (userId) => onlineUsers[userId];
 
     useEffect(() => {
         Echo.join("online")
             .here((users) => {
-                console.log("here", users);
+                const onlineUsersObj = Object.fromEntries(
+                    users.map((user) => [user.id , user])
+                );
+
+                setOnlineUsers((prevOnlineUsers) => {
+                    return {...prevOnlineUsers, ...onlineUsers};
+                });
             })
             .joining((user) => {
-                console.log("joining", user);
+                setOnlineUsers((prevOnlineUsers) => {
+                    const updatedUsers = {...prevOnlineUsers}
+                    updatedUsers[user.id] = user;
+                    return updatedUsers
+                });
             })
             .leaving((user) => {
-                console.log("leaving", user);
+                setOnlineUsers((prevOnlineUsers) => {
+                    const updatedUsers = {...prevOnlineUsers};
+                    delete updatedUsers[user.id];
+                    return updatedUsers;
+                });
             }).error(() => {
                 console.log('error' , error)
             });
+
+            return () => {
+                Echo.leave('online');
+            }
     }, []);
 
     return (
