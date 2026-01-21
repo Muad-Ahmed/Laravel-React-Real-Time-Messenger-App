@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [HomeController::class, 'home'])->name('dashboard');
+
+    Route::get('/user/{user}', function () {})->name('chat.user'); //dummy
+
+    Route::get('/group/{group}', function () {})->name('chat.group'); //dummy
 });
 
 Route::middleware('auth')->group(function () {
@@ -15,4 +19,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
