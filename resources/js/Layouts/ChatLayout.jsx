@@ -11,14 +11,14 @@ const ChatLayout = ({ children }) => {
 
     const isUserOnline = (userId) => onlineUsers[userId];
 
-    // const onSearch = (ev) => {
-    //     const search = ev.target.value.toLowerCase();
-    //     setLocalConversations(
-    //         conversations.filter((conversation) => {
-    //             conversation.name.toLowerCase().includes(search);
-    //         }),
-    //     );
-    // };
+    const onSearch = (ev) => {
+        const search = ev.target.value.toLowerCase();
+        setLocalConversations(
+            conversations.filter((conversation) => {
+                return conversation.name.toLowerCase().includes(search);
+            }),
+        );
+    };
 
     useEffect(() => {
         setSortedConversations(
