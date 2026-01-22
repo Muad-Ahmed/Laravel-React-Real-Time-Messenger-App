@@ -4,7 +4,9 @@ const GroupAvatar = ({}) => {
     return (
         <>
             <div className={`avatar placeholder`}>
-                <div className={`bg-gray-400 text-gray-800 rounded-full w-8`}>
+                <div
+                    className={`bg-gray-400 text-gray-800 rounded-full w-8 flex items-center justify-center`}
+                >
                     <span className="text-xl">
                         <UsersIcon className="w-4" />
                     </span>

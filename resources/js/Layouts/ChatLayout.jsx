@@ -63,7 +63,7 @@ const ChatLayout = ({ children }) => {
                 );
 
                 setOnlineUsers((prevOnlineUsers) => {
-                    return { ...prevOnlineUsers, ...onlineUsers };
+                    return { ...prevOnlineUsers, ...onlineUsersObj };
                 });
             })
             .joining((user) => {
@@ -80,7 +80,7 @@ const ChatLayout = ({ children }) => {
                     return updatedUsers;
                 });
             })
-            .error(() => {
+            .error((error) => {
                 console.log("error", error);
             });
 
