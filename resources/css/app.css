@@ -6,16 +6,32 @@
     height: 100vh;
 }
 
-.conversation-item .avatar.online:before {
-    width: 8px;
-    height: 8px;
-    top: 1%;
-    right: 1%;
+.avatar {
+    position: relative;
 }
 
-.conversation-item .avatar.offline:before {
-    width: 7px;
-    height: 7px;
+.avatar.online::before {
+    content: "";
+    position: absolute;
     top: 1%;
     right: 1%;
+    width: 9px;
+    height: 9px;
+    background-color: #22c55e;
+    border-radius: 50%;
+    border: 1px solid white;
+    z-index: 10;
+}
+
+.avatar.offline::before {
+    content: "";
+    position: absolute;
+    top: 1%;
+    right: 1%;
+    width: 8px;
+    height: 8px;
+    background-color: #9ca3af;
+    border-radius: 50%;
+    border: 1px solid white;
+    z-index: 10;
 }

@@ -15,7 +15,7 @@ const UserAvatar = ({ user, online = null, profile = false }) => {
             )}
             {!user.avatar_url && (
                 <div
-                    className={`chat-image avatar placeholder  ${onlineClass}`}
+                    className={`chat-image avatar placeholder ${onlineClass}`}
                 >
                     <div
                         className={`bg-gray-400 text-gray-800 rounded-full flex items-center justify-center ${sizeClass}`}
