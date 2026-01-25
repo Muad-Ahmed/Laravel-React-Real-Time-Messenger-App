@@ -33,8 +33,8 @@ const ConversationItem = ({
         <Link
             href={
                 conversation.is_group
-                    ? route("chat.group", conversation)
-                    : route("chat.user", conversation)
+                // ? route("chat.group", conversation)
+                // : route("chat.user", conversation)
             }
             preserveState
             className={
