@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Http\Resources\MessageResource;
 use App\Models\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -21,6 +22,13 @@ class SocketMessage
     public function __construct(public Message $message)
     {
         //
+    }
+
+    public function broadcastWith(): array
+    {
+        return [
+            'message' => new MessageResource($this->message),
+        ];
     }
 
     /**
