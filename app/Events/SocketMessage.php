@@ -30,8 +30,16 @@ class SocketMessage
      */
     public function broadcastOn(): array
     {
-        return [
-            new PrivateChannel('channel-name'),
-        ];
+        $m = $this->message;
+        $channels = [];
+
+        if ($m->group_id) {
+            $channels[] = new PrivateChannel('message.group.' . $m->group_id);
+        } else {
+            $channels[] = new PrivateChannel('message.user.' . collect([$m->sender_id, $m->receiver_id])
+                ->sort()->implode('-'));
+        }
+
+        return $channels;
     }
 }
