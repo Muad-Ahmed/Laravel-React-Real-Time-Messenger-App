@@ -42,7 +42,6 @@ const MessageInput = ({ conversation = null }) => {
                     const progress = Math.round(
                         (progressEvent.loaded / progressEvent.total) * 100,
                     );
-                    console.log(progress);
                 },
             })
             .then((response) => {
