@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import {
     PaperClipIcon,
     PhotoIcon,
@@ -7,6 +7,13 @@ import {
     PaperAirplaneIcon,
 } from "@heroicons/react/24/solid";
 import NewMessageInput from "./NewMessageInput";
+import EmojiPicker from "emoji-picker-react";
+import {
+    Popover,
+    PopoverButton,
+    PopoverPanel,
+    Transition,
+} from "@headlessui/react";
 
 const MessageInput = ({ conversation = null }) => {
     const [newMessage, setNewMessage] = useState("");
@@ -103,9 +110,21 @@ const MessageInput = ({ conversation = null }) => {
 
             {/* Quick interaction buttons (Emojis & Like) */}
             <div className="order-3 xs:order-3 p-2 flex">
-                <button className="p-1 text-gray-400 hover:text-gray-300">
-                    <FaceSmileIcon className="w-6 h-6" />
-                </button>
+                <Popover className="relative">
+                    <PopoverButton className="p-1 text-gray-400 hover:text-gray-300">
+                        <FaceSmileIcon className="w-6 h-6" />
+                    </PopoverButton>
+                    <PopoverPanel className="absolute z-10 right-0 bottom-full">
+                        <EmojiPicker
+                            theme="dark"
+                            onEmojiClick={(ev) => {
+                                setNewMessage(newMessage + ev.emoji);
+                            }}
+                        />
+                    </PopoverPanel>
+                </Popover>
+
+                {/* Like Button */}
                 <button className="p-1 text-gray-400 hover:text-gray-300">
                     <HandThumbUpIcon className="w-6 h-6" />
                 </button>
