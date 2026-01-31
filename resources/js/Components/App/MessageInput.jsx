@@ -19,6 +19,23 @@ const MessageInput = ({ conversation = null }) => {
     const [newMessage, setNewMessage] = useState("");
     const [inputErrorMessage, setInputErrorMessage] = useState("");
     const [messageSending, setMessageSending] = useState(false);
+    const [chosenFiles, setChosenFiles] = useState([]);
+    const [uploadProgress, setUploadProgress] = useState(0);
+
+    const onFileChange = (ev) => {
+        const files = ev.target.files;
+
+        const updatedFiles = [...files].map((file) => {
+            return {
+                file: file,
+                url: URL.createObjectURL(file),
+            };
+        });
+
+        setChosenFiles((prevFiles) => {
+            return [...prevFiles, ...updatedFiles];
+        });
+    };
 
     const onSendClick = () => {
         if (messageSending) {
@@ -36,6 +53,9 @@ const MessageInput = ({ conversation = null }) => {
         }
 
         const formData = new FormData();
+        chosenFiles.forEach((file) => {
+            formData.append("attachments[]", file.file);
+        });
         formData.append("message", newMessage);
 
         if (conversation.is_user) {
@@ -52,14 +72,22 @@ const MessageInput = ({ conversation = null }) => {
                     const progress = Math.round(
                         (progressEvent.loaded / progressEvent.total) * 100,
                     );
+                    setUploadProgress(progress);
                 },
             })
             .then((response) => {
                 setNewMessage("");
                 setMessageSending(false);
+                setUploadProgress(0);
+                setChosenFiles([]);
             })
             .catch((error) => {
                 setMessageSending(false);
+                setChosenFiles([]);
+                const message = error?.response?.data?.message;
+                setInputErrorMessage(
+                    message || "An error occurred while sending message",
+                );
             });
     };
 
@@ -90,6 +118,7 @@ const MessageInput = ({ conversation = null }) => {
                     <input
                         type="file"
                         multiple
+                        onChange={onFileChange}
                         className="absolute left-0 top-0 right-0 bottom-0 z-20 opacity-0 cursor-pointer"
                     />
                 </button>
@@ -99,6 +128,7 @@ const MessageInput = ({ conversation = null }) => {
                         type="file"
                         multiple
                         accept="image/*"
+                        onChange={onFileChange}
                         className="absolute left-0 top-0 right-0 bottom-0 z-20 opacity-0 cursor-pointer"
                     />
                 </button>
