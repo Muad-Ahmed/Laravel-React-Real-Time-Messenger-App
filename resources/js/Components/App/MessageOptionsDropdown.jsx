@@ -8,12 +8,13 @@ import {
 import { Fragment } from "react";
 import {
     EllipsisVerticalIcon,
-    ShieldCheckIcon,
     TrashIcon,
-    UserIcon,
 } from "@heroicons/react/24/solid";
+import { useEventBus } from "../../EventBus";
 
 export default function MessageOptionsDropdown({ message }) {
+    const {emit} = useEventBus();
+
     const onMessageDelete = () => {
         axios
             .delete(route("message.destroy", message.id))
