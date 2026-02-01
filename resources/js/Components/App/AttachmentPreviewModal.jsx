@@ -1,5 +1,10 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import {
+    Dialog,
+    DialogPanel,
+    Transition,
+    TransitionChild,
+} from "@headlessui/react";
 import {
     PaperClipIcon,
     XMarkIcon,
@@ -16,15 +21,15 @@ export default function AttachmentPreviewModal({
 }) {
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    // Get the current attachment object
-    const attachment = useMemo(() => {
-        return attachments[currentIndex];
-    }, [attachments, currentIndex]);
-
     // Filter attachments that can be previewed
     const previewableAttachments = useMemo(() => {
         return attachments.filter((attachment) => isPreviewable(attachment));
     }, [attachments]);
+
+    // Get the current attachment object
+    const attachment = useMemo(() => {
+        return previewableAttachments[currentIndex];
+    }, [attachments, currentIndex]);
 
     const close = () => {
         onClose();

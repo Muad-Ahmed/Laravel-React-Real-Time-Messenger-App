@@ -6,6 +6,7 @@ import ConversationHeader from "../Components/App/ConversationHeader";
 import MessageItem from "../Components/App/MessageItem";
 import MessageInput from "../Components/App/MessageInput";
 import { useEventBus } from "@/EventBus";
+import AttachmentPreviewModal from "../Components/App/AttachmentPreviewModal";
 
 function Home({ selectedConversation = null, messages = null }) {
     const [localMessages, setLocalMessages] = useState([]);
@@ -168,6 +169,7 @@ function Home({ selectedConversation = null, messages = null }) {
                                     <MessageItem
                                         key={message.id}
                                         message={message}
+                                        attachmentClick={onAttachmentClick}
                                     />
                                 ))}
                             </div>
