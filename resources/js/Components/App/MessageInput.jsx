@@ -8,6 +8,7 @@ import {
     XCircleIcon,
 } from "@heroicons/react/24/solid";
 import NewMessageInput from "./NewMessageInput";
+import AudioRecorder from "./AudioRecorder";
 import EmojiPicker from "emoji-picker-react";
 import {
     Popover,
@@ -114,6 +115,10 @@ const MessageInput = ({ conversation = null }) => {
         axios.post(route("message.store"), data);
     };
 
+    const recordedAudioReady = (file, url) => {
+        setChosenFiles((prevFiles) => [...prevFiles, { file, url }]);
+    };
+
     return (
         <div className="flex flex-wrap items-start border-t border-slate-700 py-3">
             {/* Attachment buttons for files and images */}
@@ -137,6 +142,7 @@ const MessageInput = ({ conversation = null }) => {
                         className="absolute left-0 top-0 right-0 bottom-0 z-20 opacity-0 cursor-pointer"
                     />
                 </button>
+                <AudioRecorder fileReady={recordedAudioReady} />
             </div>
 
             {/* Main text input field and send button */}
