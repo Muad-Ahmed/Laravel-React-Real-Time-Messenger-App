@@ -6,21 +6,17 @@ import {
     Transition,
 } from "@headlessui/react";
 import { Fragment } from "react";
-import {
-    EllipsisVerticalIcon,
-    TrashIcon,
-} from "@heroicons/react/24/solid";
+import { EllipsisVerticalIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { useEventBus } from "../../EventBus";
 
 export default function MessageOptionsDropdown({ message }) {
-    const {emit} = useEventBus();
+    const { emit } = useEventBus();
 
     const onMessageDelete = () => {
         axios
             .delete(route("message.destroy", message.id))
             .then((res) => {
-                emit("message.deleted", message);
-                console.log(res.data);
+                emit("message.deleted", { message, prevMessage: res.data });
             })
             .catch((err) => {
                 console.error(err);
