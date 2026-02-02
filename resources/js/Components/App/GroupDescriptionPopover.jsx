@@ -1,4 +1,9 @@
-import { Popover, Transition } from "@headlessui/react";
+import {
+    Popover,
+    PopoverButton,
+    PopoverPanel,
+    Transition,
+} from "@headlessui/react";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import { Fragment } from "react";
 

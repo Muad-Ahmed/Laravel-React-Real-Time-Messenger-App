@@ -1,5 +1,12 @@
 import { Fragment, useState } from "react";
-import { Combobox, Transition } from "@headlessui/react";
+import {
+    Combobox,
+    ComboboxButton,
+    ComboboxInput,
+    ComboboxOption,
+    ComboboxOptions,
+    Transition,
+} from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
 export default function UserPicker({ value, options, onSelect }) {
@@ -61,15 +68,15 @@ export default function UserPicker({ value, options, onSelect }) {
                                     <ComboboxOption
                                         key={person.id}
                                         value={person}
-                                        className={({ active }) =>
+                                        className={({ focus }) =>
                                             `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                                active
+                                                focus
                                                     ? "bg-teal-600 text-white"
                                                     : "bg-gray-900 text-gray-100"
                                             }`
                                         }
                                     >
-                                        {({ selected, active }) => (
+                                        {({ selected, focus }) => (
                                             <>
                                                 <span
                                                     className={`block truncate ${selected ? "font-medium" : "font-normal"}`}
@@ -78,7 +85,7 @@ export default function UserPicker({ value, options, onSelect }) {
                                                 </span>
                                                 {selected ? (
                                                     <span
-                                                        className={`absolute inset-y-0 left-0 flex items-center pl-3 ${active ? "text-white" : "text-teal-600"}`}
+                                                        className={`absolute inset-y-0 left-0 flex items-center pl-3 ${focus ? "text-white" : "text-teal-600"}`}
                                                     >
                                                         <CheckIcon
                                                             className="h-5 w-5"
@@ -95,15 +102,18 @@ export default function UserPicker({ value, options, onSelect }) {
                     </Transition>
                 </div>
             </Combobox>
-            {selected ? (
-                <span
-                    className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                        active ? "text-white" : "text-teal-600"
-                    }`}
-                >
-                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                </span>
-            ) : null}
+            {selected && (
+                <div className="flex gap-2 mt-3">
+                    {selected.map((person) => (
+                        <div
+                            key={person.id}
+                            className="badge badge-primary gap-2"
+                        >
+                            {person.name}
+                        </div>
+                    ))}
+                </div>
+            )}
         </>
     );
 }
