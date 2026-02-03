@@ -32,7 +32,7 @@ export default function UserPicker({ value, options, onSelect }) {
         <>
             <Combobox value={selected} onChange={onSelected} multiple>
                 <div className="relative mt-1">
-                    <div className="relative w-full cursor-default overflow-hidden rounded-lg text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+                    <div className="relative w-full cursor-default max-h-[100px] overflow-hidden rounded-lg text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                         <ComboboxInput
                             className="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
                             displayValue={(persons) =>
@@ -58,7 +58,7 @@ export default function UserPicker({ value, options, onSelect }) {
                         leaveTo="opacity-0"
                         afterLeave={() => setQuery("")}
                     >
-                        <ComboboxOptions className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-900 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm z-50">
+                        <ComboboxOptions className="absolute mt-1 max-h-40 w-full overflow-auto rounded-md bg-gray-900 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm z-50">
                             {filteredPeople.length === 0 && query !== "" ? (
                                 <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
                                     Nothing found.
@@ -103,7 +103,7 @@ export default function UserPicker({ value, options, onSelect }) {
                 </div>
             </Combobox>
             {selected && (
-                <div className="flex gap-2 mt-3">
+                <div className="flex flex-wrap gap-2 mt-3">
                     {selected.map((person) => (
                         <div
                             key={person.id}

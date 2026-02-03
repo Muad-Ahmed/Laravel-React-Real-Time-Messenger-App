@@ -68,7 +68,7 @@ export default function GroupModal({ show = false, onClose = () => {} }) {
         <Modal show={show} onClose={closeModal}>
             <form
                 onSubmit={createOrUpdateGroup}
-                className="p-6 overflow-y-auto"
+                className="p-6 overflow-y-visible"
             >
                 <h2 className="text-xl font-medium text-gray-900 dark:text-gray-100">
                     {group.id
