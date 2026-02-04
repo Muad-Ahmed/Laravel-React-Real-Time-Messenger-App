@@ -13,16 +13,19 @@ import {
     ShieldCheckIcon,
     UserIcon,
 } from "@heroicons/react/24/solid";
+import { useEventBus } from "../../EventBus";
 
 export default function UserOptionsDropdown({ conversation }) {
+    const { emit } = useEventBus();
+
     const changeUserRole = () => {
-        console.log("Change user role");
         if (!conversation.is_user) {
             return;
         }
         axios
             .post(route("user.changeRole", conversation.id))
             .then((res) => {
+                emit("toast.show", res.data.message);
                 console.log(res.data);
             })
             .catch((err) => {
@@ -31,13 +34,13 @@ export default function UserOptionsDropdown({ conversation }) {
     };
 
     const onBlockUser = () => {
-        console.log("Block user");
         if (!conversation.is_user) {
             return;
         }
         axios
             .post(route("user.blockUnblock", conversation.id))
             .then((res) => {
+                emit("toast.show", res.data.message);
                 console.log(res.data);
             })
             .catch((err) => {
@@ -49,7 +52,13 @@ export default function UserOptionsDropdown({ conversation }) {
         <div>
             <Menu as="div" className="relative inline-block text-left">
                 <div>
-                    <MenuButton className="flex justify-center items-center w-8 h-8 rounded-full hover:bg-black/40">
+                    <MenuButton
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                        }}
+                        className="flex justify-center items-center w-8 h-8 rounded-full hover:bg-black/40"
+                    >
                         <EllipsisVerticalIcon className="h-5 w-5" />
                     </MenuButton>
                 </div>
@@ -76,13 +85,13 @@ export default function UserOptionsDropdown({ conversation }) {
                                     >
                                         {conversation.blocked_at && (
                                             <>
-                                                <LockOpenIcon className="w-4 h-4 mr-2" />
+                                                <LockOpenIcon className="w-4 h-4 mr-2 text-green-500" />
                                                 Unblock User
                                             </>
                                         )}
                                         {!conversation.blocked_at && (
                                             <>
-                                                <LockClosedIcon className="w-4 h-4 mr-2" />
+                                                <LockClosedIcon className="w-4 h-4 mr-2 text-red-500" />
                                                 Block User
                                             </>
                                         )}
@@ -103,13 +112,13 @@ export default function UserOptionsDropdown({ conversation }) {
                                     >
                                         {conversation.is_admin && (
                                             <>
-                                                <UserIcon className="w-4 h-4 mr-2" />
+                                                <UserIcon className="w-4 h-4 mr-2 text-orange-500" />
                                                 Make Regular User
                                             </>
                                         )}
                                         {!conversation.is_admin && (
                                             <>
-                                                <ShieldCheckIcon className="w-4 h-4 mr-2" />
+                                                <ShieldCheckIcon className="w-4 h-4 mr-2 text-[#00b6ff] " />
                                                 Make Admin
                                             </>
                                         )}
