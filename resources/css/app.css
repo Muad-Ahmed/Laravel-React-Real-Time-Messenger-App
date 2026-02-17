@@ -6,31 +6,57 @@
     height: 100vh;
 }
 
-/* Emoji Box */
+/* Emoji Picker Customization */
 .EmojiPickerReact.epr-dark-theme {
-    background-color: theme('colors.gray.800');
+    background-color: theme("colors.slate.900/95%");
+    backdrop-filter: blur(8px);
+    border: 1px solid theme("colors.white/8%");
+    border-radius: 1.25rem; /* rounded-2xl */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 }
 
 .EmojiPickerReact.epr-dark-theme .epr-emoji-category-label {
-    background-color: theme('colors.gray.900');
+    background-color: theme("colors.slate.800/80%");
+    backdrop-filter: blur(4px);
+    color: theme("colors.emerald.400");
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
-/* Avatar */
+/* Avatar Indicators (Online/Offline) */
 .avatar.online:before {
-    top: 1%;
-    right: 1%;
-    width: 7px;
-    height: 7px;
-    background-color: #26e26b;
-    outline: 2px solid white;
-}
-.avatar.offline:before {
-    top: 1%;
-    right: 1%;
+    top: 2%;
+    right: 2%;
     width: 9px;
     height: 9px;
-    background-color: #e9e9ee;
-    outline: none;
+    background-color: #10b981; /* Emerald */
+    outline: 2.5px solid theme("colors.slate.950");
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.8);
+    animation: status-pulse 2s infinite;
+}
+
+@keyframes status-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
+.avatar.offline:before {
+    top: 2%;
+    right: 2%;
+    width: 9px;
+    height: 9px;
+    background-color: theme("colors.slate.500");
+    outline: 2.5px solid theme("colors.slate.950");
+    box-shadow: none;
+    opacity: 0.6;
 }
 
 /* Markdown */
@@ -84,7 +110,7 @@
 
 .chat-message-content a {
     text-decoration: underline;
-    color: rgb(246, 246, 246); 
+    color: rgb(246, 246, 246);
 }
 
 .chat-message-content > :first-child {
@@ -94,3 +120,5 @@
 .chat-message-content > :last-child {
     margin-bottom: 0;
 }
+
+/*End Markdown */

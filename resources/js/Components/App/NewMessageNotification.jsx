@@ -2,6 +2,7 @@ import { useEventBus } from "@/EventBus";
 import { Link } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import UserAvatar from "./UserAvatar";
 
 export default function NewMessageNotification({}) {
     const [toasts, setToasts] = useState([]);
@@ -25,11 +26,14 @@ export default function NewMessageNotification({}) {
     }, [on]);
 
     return (
-        <div className="toast toast-top toast-center min-w-[280px]">
+        <div className="toast toast-top toast-center min-w-[320px] z-[100] top-4">
             {toasts.map((toast, index) => (
                 <div
                     key={toast.uuid}
-                    className="alert alert-success py-3 px-4 text-gray-100 rounded-md"
+                    className="mb-3 overflow-hidden animate-in fade-in slide-in-from-top-4 duration-300
+                               bg-gradient-to-r from-slate-800/95 to-slate-900/95 
+                               border border-emerald-500/30 ring-1 ring-white/10
+                               shadow-[0_10px_30px_rgba(0,0,0,0.4)] px-4 py-3 rounded-2xl"
                 >
                     <Link
                         href={
@@ -37,10 +41,19 @@ export default function NewMessageNotification({}) {
                                 ? route("chat.group", toast.group_id)
                                 : route("chat.user", toast.user.id)
                         }
-                        className="flex items-center gap-2"
+                        className="flex items-center gap-3 group transition-all"
                     >
-                        <UserAvatar user={toast.user} />
-                        <span>{toast.message}</span>
+                        <div className="shrink-0 group-hover:scale-110 transition-transform">
+                            <UserAvatar user={toast.user} />
+                        </div>
+                        <div className="flex flex-col overflow-hidden">
+                            <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-0.5">
+                                New Message
+                            </span>
+                            <span className="text-sm text-slate-100 font-medium truncate group-hover:text-emerald-300 transition-colors">
+                                {toast.message}
+                            </span>
+                        </div>
                     </Link>
                 </div>
             ))}

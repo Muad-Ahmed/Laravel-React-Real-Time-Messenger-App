@@ -53,10 +53,18 @@ const AudioRecorder = ({ fileReady }) => {
     return (
         <button
             onClick={onMicrophoneClick}
-            className="p-1 text-gray-400 hover:text-gray-200"
+            className={`p-2 rounded-full transition-all duration-300 outline-none active:scale-90 ${
+                recording
+                    ? "bg-red-500/10 shadow-[0_0_15px_rgba(239,68,68,0.2)]"
+                    : "hover:bg-white/10 text-slate-400 hover:text-indigo-400"
+            }`}
         >
-            {recording && <StopCircleIcon className="w-6 text-red-600" />}
-            {!recording && <MicrophoneIcon className="w-6" />}
+            {recording && (
+                <StopCircleIcon className="w-6 h-6 text-red-500 animate-pulse drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]" />
+            )}
+            {!recording && (
+                <MicrophoneIcon className="w-6 h-6 transition-colors" />
+            )}
         </button>
     );
 };

@@ -21,13 +21,31 @@ export default function Toast({}) {
     }, [on]);
 
     return (
-        <div className="toast min-w-[280px] w-full xs:w-auto">
+        <div className="toast toast-top toast-end min-w-[320px] w-full xs:w-auto p-4 space-y-3 z-[100]">
             {toasts.map((toast, index) => (
                 <div
                     key={toast.uuid}
-                    className="alert alert-success py-3 px-4 text-gray-100 rounded-md "
+                    className="alert bg-gradient-to-r from-emerald-600 to-teal-700 py-3.5 px-5 text-white font-medium rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/20 animate-in slide-in-from-right-5 duration-300"
                 >
-                    <span>{toast.message}</span>
+                    <div className="flex items-center gap-2">
+                        <div className="bg-white/20 rounded-full p-1">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-4 w-4 text-white"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="3"
+                                    d="M5 13l4 4L19 7"
+                                />
+                            </svg>
+                        </div>
+                        <span className="tracking-wide">{toast.message}</span>
+                    </div>
                 </div>
             ))}
         </div>

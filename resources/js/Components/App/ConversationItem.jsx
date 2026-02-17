@@ -19,14 +19,16 @@ const ConversationItem = ({
             !conversation.is_group &&
             selectedConversation.id == conversation.id
         ) {
-            classes = "border-blue-500 bg-black/20";
+            classes =
+                "border-indigo-500 bg-indigo-500/10 shadow-[inset_4px_0_15px_-5px_rgba(99,102,241,0.4)]";
         }
         if (
             selectedConversation.is_group &&
             conversation.is_group &&
             selectedConversation.id == conversation.id
         ) {
-            classes = "border-blue-500 bg-black/20";
+            classes =
+                "border-indigo-500 bg-indigo-500/10 shadow-[inset_4px_0_15px_-5px_rgba(99,102,241,0.4)]";
         }
     }
 
@@ -39,7 +41,7 @@ const ConversationItem = ({
             }
             preserveState
             className={
-                "conversation-item flex items-center gap-2 p-2 text-gray-300 transition-all cursor-pointer border-l-4 hover:bg-black/30 " +
+                "conversation-item flex items-center gap-3 p-3 text-gray-400 transition-all duration-300 cursor-pointer border-l-[3px] hover:bg-white/[0.05] " +
                 classes +
                 (conversation.is_user && currentUser.is_admin
                     ? " pr-2"
@@ -55,16 +57,16 @@ const ConversationItem = ({
                 className={
                     `flex-1 text-xs max-w-full overflow-hidden ` +
                     (conversation.is_user && conversation.blocked_at
-                        ? " opacity-50"
+                        ? " opacity-40"
                         : "")
                 }
             >
-                <div className="flex gap-1 justify-between items-center">
-                    <h3 className="text-sm font-semibold overflow-hidden text-nowrap text-ellipsis">
+                <div className="flex gap-1 justify-between items-center mb-1">
+                    <h3 className="text-[14px] font-bold overflow-hidden text-nowrap text-ellipsis text-gray-100 tracking-tight">
                         {conversation.name}
                     </h3>
                     {conversation.last_message_date && (
-                        <span className="text-nowrap">
+                        <span className="text-[10px] text-nowrap font-medium text-gray-500 uppercase tracking-tighter">
                             {formatMessageDateShort(
                                 conversation.last_message_date,
                             )}
@@ -72,12 +74,15 @@ const ConversationItem = ({
                     )}
                 </div>
                 {conversation.last_message && (
-                    <p className="text-xs text-nowrap overflow-hidden text-ellipsis">
+                    <p className="text-[12px] text-nowrap overflow-hidden text-ellipsis text-gray-500 font-medium">
                         {conversation.last_message}
                     </p>
                 )}
             </div>
             {!!currentUser.is_admin && conversation.is_user && (
+                // <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                //     <UserOptionsDropdown conversation={conversation} />
+                // </div>
                 <UserOptionsDropdown conversation={conversation} />
             )}
         </Link>

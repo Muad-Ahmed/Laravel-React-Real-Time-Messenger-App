@@ -1,6 +1,6 @@
-import { Transition } from '@headlessui/react';
-import { Link } from '@inertiajs/react';
-import { createContext, useContext, useState } from 'react';
+import { Transition } from "@headlessui/react";
+import { Link } from "@inertiajs/react";
+import { createContext, useContext, useState } from "react";
 
 const DropDownContext = createContext();
 
@@ -23,7 +23,9 @@ const Trigger = ({ children }) => {
 
     return (
         <>
-            <div onClick={toggleOpen}>{children}</div>
+            <div onClick={toggleOpen} className="cursor-pointer">
+                {children}
+            </div>
 
             {open && (
                 <div
@@ -36,25 +38,25 @@ const Trigger = ({ children }) => {
 };
 
 const Content = ({
-    align = 'right',
-    width = '48',
-    contentClasses = 'py-1 bg-white dark:bg-gray-700',
+    align = "right",
+    width = "48",
+    contentClasses = "py-1.5 bg-white dark:bg-gradient-to-b dark:from-slate-800 dark:to-slate-900",
     children,
 }) => {
     const { open, setOpen } = useContext(DropDownContext);
 
-    let alignmentClasses = 'origin-top';
+    let alignmentClasses = "origin-top";
 
-    if (align === 'left') {
-        alignmentClasses = 'ltr:origin-top-left rtl:origin-top-right start-0';
-    } else if (align === 'right') {
-        alignmentClasses = 'ltr:origin-top-right rtl:origin-top-left end-0';
+    if (align === "left") {
+        alignmentClasses = "ltr:origin-top-left rtl:origin-top-right start-0";
+    } else if (align === "right") {
+        alignmentClasses = "ltr:origin-top-right rtl:origin-top-left end-0";
     }
 
-    let widthClasses = '';
+    let widthClasses = "";
 
-    if (width === '48') {
-        widthClasses = 'w-48';
+    if (width === "48") {
+        widthClasses = "w-48";
     }
 
     return (
@@ -62,19 +64,19 @@ const Content = ({
             <Transition
                 show={open}
                 enter="transition ease-out duration-200"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
+                enterFrom="opacity-0 scale-95 translate-y-[-10px]"
+                enterTo="opacity-100 scale-100 translate-y-0"
                 leave="transition ease-in duration-75"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
+                leaveFrom="opacity-100 scale-100 translate-y-0"
+                leaveTo="opacity-0 scale-95 translate-y-[-10px]"
             >
                 <div
-                    className={`absolute z-50 mt-2 rounded-md shadow-lg ${alignmentClasses} ${widthClasses}`}
+                    className={`absolute z-50 mt-3 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] ${alignmentClasses} ${widthClasses}`}
                     onClick={() => setOpen(false)}
                 >
                     <div
                         className={
-                            `rounded-md ring-1 ring-black ring-opacity-5 ` +
+                            `rounded-2xl ring-1 ring-black/5 dark:ring-white/[0.08] border border-transparent dark:border-white/[0.05] ` +
                             contentClasses
                         }
                     >
@@ -86,12 +88,16 @@ const Content = ({
     );
 };
 
-const DropdownLink = ({ className = '', children, ...props }) => {
+const DropdownLink = ({ className = "", children, ...props }) => {
     return (
         <Link
             {...props}
             className={
-                'block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-300 dark:hover:bg-gray-800 dark:focus:bg-gray-800 ' +
+                "block w-full px-4 py-2.5 text-start text-sm leading-5 font-medium transition duration-200 ease-in-out " +
+                "text-slate-700 dark:text-slate-300 " +
+                "hover:bg-slate-100 dark:hover:bg-white/[0.05] " +
+                "hover:text-indigo-600 dark:hover:text-indigo-400 " +
+                "focus:outline-none focus:bg-slate-100 dark:focus:bg-white/[0.05] " +
                 className
             }
         >

@@ -57,7 +57,7 @@ export default function UserOptionsDropdown({ conversation }) {
                             e.stopPropagation();
                             e.preventDefault();
                         }}
-                        className="flex justify-center items-center w-8 h-8 rounded-full hover:bg-black/40"
+                        className="flex justify-center items-center w-8 h-8 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-all duration-200 outline-none"
                     >
                         <EllipsisVerticalIcon className="h-5 w-5" />
                     </MenuButton>
@@ -71,54 +71,53 @@ export default function UserOptionsDropdown({ conversation }) {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <MenuItems className="absolute right-0 mt-2 w-48 rounded-md bg-gray-800 shadow-lg z-50">
-                        <div className="px-1 py-1 ">
+                    <MenuItems className="absolute right-0 mt-2 w-52 origin-top-right rounded-xl bg-gradient-to-b from-slate-800 to-slate-900 border border-white/[0.08] ring-1 ring-black shadow-[0_10px_40px_rgba(0,0,0,0.5)] z-50 focus:outline-none overflow-hidden">
+                        <div className="p-1.5 space-y-0.5">
                             <MenuItem>
                                 {({ focus }) => (
                                     <button
                                         onClick={onBlockUser}
                                         className={` ${
                                             focus
-                                                ? "bg-black/30 text-white"
-                                                : "text-gray-100"
-                                        } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                                ? "bg-white/[0.05] text-white"
+                                                : "text-slate-300"
+                                        } group flex w-full items-center rounded-lg px-3 py-2.5 text-sm font-medium transition-colors`}
                                     >
                                         {conversation.blocked_at && (
                                             <>
-                                                <LockOpenIcon className="w-4 h-4 mr-2 text-green-500" />
+                                                <LockOpenIcon className="w-4 h-4 mr-3 text-emerald-500 drop-shadow-[0_0_5px_rgba(16,185,129,0.3)]" />
                                                 Unblock User
                                             </>
                                         )}
                                         {!conversation.blocked_at && (
                                             <>
-                                                <LockClosedIcon className="w-4 h-4 mr-2 text-red-500" />
+                                                <LockClosedIcon className="w-4 h-4 mr-3 text-rose-500 drop-shadow-[0_0_5px_rgba(244,63,94,0.3)]" />
                                                 Block User
                                             </>
                                         )}
                                     </button>
                                 )}
                             </MenuItem>
-                        </div>
-                        <div className="px-1 py-1 ">
+                            <div className="h-px bg-white/[0.05] my-1 mx-2" />
                             <MenuItem>
                                 {({ focus }) => (
                                     <button
                                         onClick={changeUserRole}
                                         className={` ${
                                             focus
-                                                ? "bg-black/30 text-white"
-                                                : "text-gray-100"
-                                        } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                                ? "bg-white/[0.05] text-white"
+                                                : "text-slate-300"
+                                        } group flex w-full items-center rounded-lg px-3 py-2.5 text-sm font-medium transition-colors`}
                                     >
                                         {conversation.is_admin && (
                                             <>
-                                                <UserIcon className="w-4 h-4 mr-2 text-orange-500" />
+                                                <UserIcon className="w-4 h-4 mr-3 text-amber-500 drop-shadow-[0_0_5px_rgba(245,158,11,0.3)]" />
                                                 Make Regular User
                                             </>
                                         )}
                                         {!conversation.is_admin && (
                                             <>
-                                                <ShieldCheckIcon className="w-4 h-4 mr-2 text-[#00b6ff] " />
+                                                <ShieldCheckIcon className="w-4 h-4 mr-3 text-sky-400 drop-shadow-[0_0_5px_rgba(56,189,248,0.3)]" />
                                                 Make Admin
                                             </>
                                         )}
