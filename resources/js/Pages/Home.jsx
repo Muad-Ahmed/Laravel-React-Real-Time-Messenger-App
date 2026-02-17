@@ -36,7 +36,7 @@ function Home({ selectedConversation = null, messages = null }) {
         }
     };
 
-    const messageDeleted = ({message}) => {
+    const messageDeleted = ({ message }) => {
         if (
             selectedConversation &&
             selectedConversation.is_group &&
@@ -162,11 +162,46 @@ function Home({ selectedConversation = null, messages = null }) {
     return (
         <>
             {!messages && (
-                <div className="flex flex-col gap-8 justify-center items-center text-center h-full opacity-35">
-                    <div className="text-2xl md:text-4xl p-16 text-slate-200">
-                        Please select conversation to see messages
+                /* Empty state */
+                <div className="flex flex-col justify-center items-center text-center h-full relative overflow-hidden bg-slate-950/20 backdrop-blur-sm">
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none" />
+                    <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none" />
+
+                    <div className="relative z-10 flex flex-col items-center max-w-md px-6">
+                        <div className="relative mb-8 group">
+                            <div className="absolute inset-0 bg-indigo-500/20 blur-2xl rounded-full group-hover:bg-indigo-500/30 transition-all duration-500" />
+                            <div className="relative bg-gradient-to-b from-white/10 to-white/[0.02] p-8 rounded-[2.5rem] border border-white/10 shadow-2xl backdrop-blur-md">
+                                <ChatBubbleLeftRightIcon className="w-20 h-20 text-indigo-400 drop-shadow-[0_0_15px_rgba(129,140,248,0.5)]" />
+                            </div>
+                        </div>
+
+                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
+                            Choose a{" "}
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">
+                                Conversation
+                            </span>
+                        </h2>
+
+                        <p className="text-slate-400 text-lg leading-relaxed font-light">
+                            Select a conversation from the sidebar to start
+                            chatting. Your connections are waiting for you.
+                        </p>
+
+                        <div className="mt-10 flex gap-2">
+                            <div
+                                className="w-2 h-2 rounded-full bg-indigo-500/40 animate-bounce"
+                                style={{ animationDelay: "0ms" }}
+                            />
+                            <div
+                                className="w-2 h-2 rounded-full bg-indigo-500/40 animate-bounce"
+                                style={{ animationDelay: "150ms" }}
+                            />
+                            <div
+                                className="w-2 h-2 rounded-full bg-indigo-500/40 animate-bounce"
+                                style={{ animationDelay: "300ms" }}
+                            />
+                        </div>
                     </div>
-                    <ChatBubbleLeftRightIcon className="w-32 h-32 inline-block" />
                 </div>
             )}
             {messages && (
@@ -176,12 +211,12 @@ function Home({ selectedConversation = null, messages = null }) {
                     />
                     <div
                         ref={messagesCtrRef}
-                        className="flex-1 overflow-y-auto p-5"
+                        className="flex-1 overflow-y-auto p-5 bg-black/10 shadow-inner custom-scrollbar"
                     >
                         {/* Messages */}
                         {localMessages.length === 0 && (
                             <div className="flex justify-center items-center h-full">
-                                <div className="text-lg text-slate-200">
+                                <div className="text-lg text-slate-400 bg-white/5 px-6 py-2 rounded-full border border-white/5">
                                     No messages found
                                 </div>
                             </div>
@@ -199,7 +234,10 @@ function Home({ selectedConversation = null, messages = null }) {
                             </div>
                         )}
                     </div>
-                    <MessageInput conversation={selectedConversation} />
+                    {/* This addition might lead to issues */}
+                    <div className="border-t border-white/[0.05] bg-white/[0.01]">
+                        <MessageInput conversation={selectedConversation} />
+                    </div>
                 </>
             )}
 
