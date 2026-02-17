@@ -2,11 +2,11 @@ import { PauseCircleIcon, PlayCircleIcon } from "@heroicons/react/24/solid";
 import React, { useRef, useState } from "react";
 
 const CustomAudioPlayer = ({ file, showVolume = true }) => {
-    const audioRef = useRef(); // مرجع لعنصر الصوت HTML5
-    const [isPlaying, setIsPlaying] = useState(false); // حالة التشغيل/الإيقاف
-    const [volume, setVolume] = useState(1); // حالة مستوى الصوت (0 إلى 1)
-    const [duration, setDuration] = useState(0); // حالة المدة الكلية للملف
-    const [currentTime, setCurrentTime] = useState(0); // حالة الوقت الحالي للتشغيل
+    const audioRef = useRef(); 
+    const [isPlaying, setIsPlaying] = useState(false); 
+    const [volume, setVolume] = useState(1); 
+    const [duration, setDuration] = useState(0); 
+    const [currentTime, setCurrentTime] = useState(0); 
 
     const togglePlayPause = () => {
         const audio = audioRef.current;
@@ -47,7 +47,7 @@ const CustomAudioPlayer = ({ file, showVolume = true }) => {
     };
 
     return (
-        <div className="w-full flex items-center gap-2 py-2 px-3 rounded-md bg-slate-800">
+        <div className="w-full flex items-center gap-3 py-2.5 px-4 rounded-xl bg-gradient-to-b from-slate-800/90 to-slate-900 border-t border-white/10 shadow-xl shadow-black/20">
             {/* Hidden HTML5 audio element handled via ref */}
             <audio
                 ref={audioRef}
@@ -59,9 +59,16 @@ const CustomAudioPlayer = ({ file, showVolume = true }) => {
             />
 
             {/* Play/Pause toggle button */}
-            <button onClick={togglePlayPause}>
-                {isPlaying && <PauseCircleIcon className="w-6 text-gray-400" />}
-                {!isPlaying && <PlayCircleIcon className="w-6 text-gray-400" />}
+            <button
+                onClick={togglePlayPause}
+                className="flex-shrink-0 transition-all duration-200 hover:scale-110 active:scale-95 group focus:outline-none"
+            >
+                {isPlaying && (
+                    <PauseCircleIcon className="w-9 h-9 text-indigo-400 group-hover:text-indigo-300 drop-shadow-[0_0_8px_rgba(129,140,248,0.5)]" />
+                )}
+                {!isPlaying && (
+                    <PlayCircleIcon className="w-9 h-9 text-slate-300 group-hover:text-white drop-shadow-md" />
+                )}
             </button>
 
             {/* Optional volume control slider */}
@@ -73,19 +80,27 @@ const CustomAudioPlayer = ({ file, showVolume = true }) => {
                     step="0.01"
                     value={volume}
                     onChange={handleVolumeChange}
+                    className="w-16 h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-indigo-500 hover:accent-indigo-400 transition-all opacity-60 hover:opacity-100"
                 />
             )}
 
             {/* Playback progress and seeking slider */}
             <input
                 type="range"
-                className="flex-1"
+                className="flex-1 h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-indigo-500 hover:accent-indigo-400 shadow-inner"
                 min="0"
                 max={duration}
                 step="0.01"
                 value={currentTime}
                 onChange={handleSeekChange}
             />
+
+            <span className="text-[10px] font-mono font-medium text-slate-400 tabular-nums">
+                {Math.floor(currentTime / 60)}:
+                {Math.floor(currentTime % 60)
+                    .toString()
+                    .padStart(2, "0")}
+            </span>
         </div>
     );
 };
