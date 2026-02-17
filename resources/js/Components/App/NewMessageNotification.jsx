@@ -26,11 +26,11 @@ export default function NewMessageNotification({}) {
     }, [on]);
 
     return (
-        <div className="toast toast-top toast-center min-w-[320px] z-[100] top-4">
+        <div className="toast toast-top toast-center min-w-[320px] pointer-events-none z-[100] top-4">
             {toasts.map((toast, index) => (
                 <div
                     key={toast.uuid}
-                    className="mb-3 overflow-hidden animate-in fade-in slide-in-from-top-4 duration-300
+                    className="mb-3 pointer-events-auto overflow-hidden animate-in fade-in slide-in-from-top-4 duration-300
                                bg-gradient-to-r from-slate-800/95 to-slate-900/95 
                                border border-emerald-500/30 ring-1 ring-white/10
                                shadow-[0_10px_30px_rgba(0,0,0,0.4)] px-4 py-3 rounded-2xl"

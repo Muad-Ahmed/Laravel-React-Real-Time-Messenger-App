@@ -189,7 +189,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                     className="inline-flex items-center justify-center rounded-xl p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:outline-none dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-200"
                                 >
                                     <svg
-                                        className="h-6 w-6"
+                                        className="h-7 w-7"
                                         stroke="currentColor"
                                         fill="none"
                                         viewBox="0 0 24 24"

@@ -21,11 +21,11 @@ export default function Toast({}) {
     }, [on]);
 
     return (
-        <div className="toast toast-top toast-end min-w-[320px] w-full xs:w-auto p-4 space-y-3 z-[100]">
+        <div className="toast toast-top toast-end min-w-[320px] w-full xs:w-auto p-4 pointer-events-none space-y-3 z-[100]">
             {toasts.map((toast, index) => (
                 <div
                     key={toast.uuid}
-                    className="alert bg-gradient-to-r from-emerald-600 to-teal-700 py-3.5 px-5 text-white font-medium rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/20 animate-in slide-in-from-right-5 duration-300"
+                    className="alert pointer-events-auto bg-gradient-to-r from-emerald-600 to-teal-700 py-3.5 px-5 text-white font-medium rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/20 animate-in slide-in-from-right-5 duration-300"
                 >
                     <div className="flex items-center gap-2">
                         <div className="bg-white/20 rounded-full p-1">
