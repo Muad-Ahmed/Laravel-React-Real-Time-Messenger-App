@@ -163,51 +163,61 @@ const ChatLayout = ({ children }) => {
 
     return (
         <>
-            <div className="flex-1 w-full flex overflow-hidden">
+            <div className="flex-1 w-full flex overflow-hidden bg-slate-900">
                 <div
-                    className={`transition-all w-full sm:w-[220px] md:w-[300px] bg-slate-800
+                    className={`transition-all duration-300 w-full sm:w-[240px] md:w-[320px] bg-white/[0.02] border-r border-indigo-500/30 shadow-[1px_0_15px_-4px_rgba(99,102,241,0.2)]
                     flex flex-col overflow-hidden ${
                         selectedConversation ? "-ml-[100%] sm:ml-0" : ""
                     }`}
                 >
-                    <div className="flex items-center justify-between py-2 px-3 text-xl font-medium text-gray-200">
-                        My Conversations
+                    <div className="flex items-center justify-between py-5 px-5">
+                        <h2 className="text-2xl font-black text-white tracking-tight drop-shadow-lg">
+                            My Conversations
+                        </h2>
                         <div
                             className="tooltip tooltip-left"
                             data-tip="Create new Group"
                         >
                             <button
                                 onClick={(ev) => setShowGroupModal(true)}
-                                className="text-gray-400 hover:text-gray-200"
+                                className="p-2.5 pt-1.5 rounded-xl bg-white/5 text-gray-400 hover:text-white hover:bg-indigo-600/20 border border-white/5 hover:border-indigo-500/50 transition-all duration-300 active:scale-95"
                             >
-                                <PencilSquareIcon className="w-4 h-4 inline-block ml-2" />
+                                <PencilSquareIcon className="w-4 h-4 inline-block" />
                             </button>
                         </div>
                     </div>
-                    <div className="p-3">
+                    <div className="px-4 pb-4">
                         <TextInput
                             onKeyUp={onSearch}
                             placeholder="Filter users and groups"
-                            className="w-full"
+                            className="w-full bg-black/40 border-white/5 focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/20 rounded-xl py-2.5 px-4 text-sm text-gray-200 placeholder-gray-500 transition-all"
                         />
                     </div>
-                    <div className="flex-1 overflow-auto">
+                    <div className="flex-1 overflow-auto px-2 space-y-1 scrollbar-thin scrollbar-thumb-white/10">
+                        {/* Here */}
                         {sortedConversations &&
                             sortedConversations.map((conversation) => (
-                                <ConversationItem
+                                <div
                                     key={`${
                                         conversation.is_group
                                             ? "group_"
                                             : "user_"
                                     }${conversation.id}`}
-                                    conversation={conversation}
-                                    online={!!isUserOnline(conversation.id)}
-                                    selectedConversation={selectedConversation}
-                                />
+                                    className="rounded-xl transition-colors hover:bg-white/5 border border-transparent hover:border-white/5 active:bg-white/[0.02]"
+                                >
+                                    <ConversationItem
+                                        conversation={conversation}
+                                        online={!!isUserOnline(conversation.id)}
+                                        selectedConversation={
+                                            selectedConversation
+                                        }
+                                    />
+                                </div>
                             ))}
                     </div>
                 </div>
-                <div className="flex-1 flex flex-col overflow-hidden">
+                {/* Main Chat Area: Slightly lighter than sidebar for distinction */}
+                <div className="flex-1 flex flex-col overflow-hidden bg-white/[0.01]">
                     {children}
                 </div>
             </div>
