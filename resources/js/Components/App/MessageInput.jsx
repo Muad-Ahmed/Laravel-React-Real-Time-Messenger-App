@@ -120,11 +120,11 @@ const MessageInput = ({ conversation = null }) => {
     };
 
     return (
-        <div className="flex flex-wrap items-start border-t border-slate-700 py-3">
-            {/* Attachment buttons for files and images */}
-            <div className="order-2 flex-1 xs:flex-none xs:order-1 p-2">
-                <button className="p-1 text-gray-400 hover:text-gray-300 relative">
-                    <PaperClipIcon className="w-6" />
+        <div className="flex flex-wrap items-start border-t border-white/5 bg-[#0f111a]/80 py-4 px-2 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.5)]">
+            {/* Attachment buttons */}
+            <div className="order-2 flex-1 xs:flex-none xs:order-1 p-2 flex gap-1">
+                <button className="p-2 text-gray-400 hover:text-indigo-400 hover:bg-white/5 rounded-full transition-all relative">
+                    <PaperClipIcon className="w-5" />
                     <input
                         type="file"
                         multiple
@@ -132,8 +132,8 @@ const MessageInput = ({ conversation = null }) => {
                         className="absolute left-0 top-0 right-0 bottom-0 z-20 opacity-0 cursor-pointer"
                     />
                 </button>
-                <button className="p-1 text-gray-400 hover:text-gray-300 relative">
-                    <PhotoIcon className="w-6" />
+                <button className="p-2 text-gray-400 hover:text-indigo-400 hover:bg-white/5 rounded-full transition-all relative">
+                    <PhotoIcon className="w-5" />
                     <input
                         type="file"
                         multiple
@@ -147,7 +147,7 @@ const MessageInput = ({ conversation = null }) => {
 
             {/* Main text input field and send button */}
             <div className="order-1 px-3 xs:p-0 min-w-[220px] basis-full xs:basis-0 xs:order-2 flex-1 relative">
-                <div className="flex">
+                <div className="flex items-end bg-white/[0.03] border border-white/10 rounded-xl overflow-hidden focus-within:border-indigo-500/50 focus-within:ring-1 focus-within:ring-indigo-500/20 transition-all shadow-inner">
                     <NewMessageInput
                         value={newMessage}
                         onSend={onSendClick}
@@ -156,47 +156,54 @@ const MessageInput = ({ conversation = null }) => {
                     <button
                         onClick={onSendClick}
                         disabled={messageSending}
-                        className="btn btn-info rounded-l-none"
+                        className="btn btn-info outline outline-1 outline-[#00b6ff] rounded-l-none"
                     >
                         <PaperAirplaneIcon className="w-6" />
                         <span className="hidden sm:inline">Send</span>
                     </button>
                 </div>
+
                 {!!uploadProgress && (
                     <progress
-                        className="progress progress-info w-full"
+                        className="progress progress-info w-full h-1 shadow-glow"
                         value={uploadProgress}
                         max="100"
                     ></progress>
                 )}
                 {inputErrorMessage && (
-                    <p className="text-xs text-red-400">{inputErrorMessage}</p>
+                    <p className="text-[10px] text-red-400 mt-1 font-medium ml-2 uppercase tracking-wide italic">
+                        {inputErrorMessage}
+                    </p>
                 )}
-                <div className="flex flex-wrap gap-1 mt-2">
-                    {/* Iterate through chosen files to render previews */}
+
+                {/* File Previews Area */}
+                <div className="flex flex-wrap gap-2 mt-3">
                     {chosenFiles.map((file) => (
                         <div
                             key={file.file.name}
-                            className={
-                                `relative flex justify-between cursor-pointer ` +
-                                (!isImage(file.file) ? " w-[240px]" : "")
-                            }
+                            className="
+                             relative group inline-flex w-fit
+                                rounded-lg overflow-hidden
+                                border border-white/10 shadow-lg
+                            "
                         >
                             {/* Render thumbnail if the file is an image */}
                             {isImage(file.file) && (
                                 <img
                                     src={file.url}
                                     alt=""
-                                    className="w-16 h-16 object-cover"
+                                    className="w-20 h-20 object-cover hover:scale-105 transition-transform"
                                 />
                             )}
 
                             {/* Render a custom audio player if the file is an audio type */}
                             {isAudio(file.file) && (
-                                <CustomAudioPlayer
-                                    file={file}
-                                    showVolume={false}
-                                />
+                                <div className="p-1 bg-white/5">
+                                    <CustomAudioPlayer
+                                        file={file}
+                                        showVolume={false}
+                                    />
+                                </div>
                             )}
 
                             {/* Render a generic attachment preview for other file types */}
@@ -214,22 +221,22 @@ const MessageInput = ({ conversation = null }) => {
                                         ),
                                     );
                                 }}
-                                className="absolute w-6 h-6 rounded-full bg-gray-800 -right-2 -top-2 text-gray-300 hover:text-gray-100 z-10"
+                                className="absolute -right-1 -top-1 opacity-0 group-hover:opacity-100 transition-opacity bg-red-500 text-white rounded-full shadow-xl"
                             >
-                                <XCircleIcon className="w-6" />
+                                <XCircleIcon className="w-5 h-5" />
                             </button>
                         </div>
                     ))}
                 </div>
             </div>
 
-            {/* Quick interaction buttons (Emojis & Like) */}
-            <div className="order-3 xs:order-3 p-2 flex">
+            {/* Quick interaction buttons  (Emojis & Like) */}
+            <div className="order-3 xs:order-3 p-2 flex gap-1 items-center">
                 <Popover className="relative">
-                    <PopoverButton className="p-1 text-gray-400 hover:text-gray-300">
-                        <FaceSmileIcon className="w-6 h-6" />
+                    <PopoverButton className="p-2 text-gray-400 hover:text-yellow-400 hover:bg-white/5 rounded-full transition-all">
+                        <FaceSmileIcon className="w-5 h-5" />
                     </PopoverButton>
-                    <PopoverPanel className="absolute z-10 right-0 bottom-full">
+                    <PopoverPanel className="absolute z-[100] right-0 bottom-full mb-4 shadow-2xl border border-white/10 rounded-2xl overflow-hidden">
                         <EmojiPicker
                             theme="dark"
                             onEmojiClick={(ev) => {
@@ -242,9 +249,9 @@ const MessageInput = ({ conversation = null }) => {
                 {/* Like Button */}
                 <button
                     onClick={onLikeClick}
-                    className="p-1 text-gray-400 hover:text-gray-300"
+                    className="p-2 text-gray-400 hover:text-blue-400 hover:bg-white/5 rounded-full transition-all active:scale-125"
                 >
-                    <HandThumbUpIcon className="w-6 h-6" />
+                    <HandThumbUpIcon className="w-5 h-5" />
                 </button>
             </div>
         </div>
