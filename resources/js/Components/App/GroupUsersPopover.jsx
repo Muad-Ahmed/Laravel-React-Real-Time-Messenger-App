@@ -20,7 +20,7 @@ export default function GroupUsersPopover({ users = [] }) {
               hover:text-indigo-300 transition-all duration-200 outline-none
             `}
                     >
-                        <UsersIcon className="w-5" />
+                        <UsersIcon className="w-4 sm:w-5" />
                     </PopoverButton>
 
                     <Transition
@@ -33,14 +33,12 @@ export default function GroupUsersPopover({ users = [] }) {
                         leaveTo="opacity-0 translate-y-2"
                     >
                         <PopoverPanel className="absolute right-0 z-50 mt-4 w-[260px] px-4 sm:px-0">
-                            {/* تعديل: تطبيق تأثير الزجاج الداكن مع حدود مضيئة وظلال ناعمة */}
                             <div className="overflow-hidden rounded-2xl shadow-[0_15px_50px_rgba(0,0,0,0.5)] border border-white/[0.08] ring-1 ring-white/[0.05]">
                                 <div className="bg-gradient-to-b from-slate-800 to-slate-900 py-3">
-                                    <div className="px-4 py-2 mb-1 border-b border-white/[0.05]">
-                                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">
-                                            Members
-                                        </span>
-                                    </div>
+                                    <h2 className=" px-4 py-2 text-sm font-bold text-indigo-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                                        <span className="w-1 h-4 bg-indigo-500 rounded-full"></span>
+                                        Members
+                                    </h2>
                                     <div className="max-h-[300px] overflow-y-auto custom-scrollbar">
                                         {users.map((user) => (
                                             <Link

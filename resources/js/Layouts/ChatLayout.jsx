@@ -179,7 +179,10 @@ const ChatLayout = ({ children }) => {
                             data-tip="Create new Group"
                         >
                             <button
-                                onClick={(ev) => setShowGroupModal(true)}
+                                onClick={() => {
+                                    emit("GroupModal.show", null);
+                                    setShowGroupModal(true);
+                                }}
                                 className="p-2.5 pt-1.5 rounded-xl bg-white/5 text-gray-400 hover:text-white hover:bg-indigo-600/20 border border-white/5 hover:border-indigo-500/50 transition-all duration-300 active:scale-95"
                             >
                                 <PencilSquareIcon className="w-4 h-4 inline-block" />
