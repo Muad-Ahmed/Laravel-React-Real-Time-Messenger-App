@@ -43,7 +43,10 @@ export default function MessageOptionsDropdown({ message }) {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <MenuItems className="absolute left-0 mt-2 w-36 origin-top-left rounded-xl bg-gradient-to-b from-slate-800 to-slate-900 shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-white/[0.08] ring-1 ring-white/[0.05] z-50 focus:outline-none">
+                    <MenuItems
+                        anchor="bottom start"
+                        className="w-36 [--anchor-gap:8px] rounded-xl bg-gradient-to-b from-slate-800 to-slate-900 shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-white/[0.08] ring-1 ring-white/[0.05] z-50 focus:outline-none transition-all duration-200 data-[closed]:scale-95 data-[closed]:opacity-0"
+                    >
                         <div className="p-1.5">
                             <MenuItem>
                                 {({ focus }) => (
