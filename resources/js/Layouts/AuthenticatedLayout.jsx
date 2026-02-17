@@ -98,7 +98,7 @@ export default function AuthenticatedLayout({ header, children }) {
             <div className="min-h-screen bg-gray-50 dark:bg-[#0b0e14] flex flex-col h-screen transition-colors duration-500">
                 <nav className="border-b border-gray-200 bg-white/90 dark:border-white/[0.05] dark:bg-[#11141d]/80 sticky top-0 z-50">
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                        <div className="flex h-16 justify-between">
+                        <div className="flex h-16 justify-between gap-1">
                             <div className="flex">
                                 <div className="flex shrink-0 items-center">
                                     <Link
@@ -119,29 +119,32 @@ export default function AuthenticatedLayout({ header, children }) {
                                     </NavLink>
                                 </div>
                             </div>
-
-                            <div className="hidden sm:ms-6 sm:flex sm:items-center gap-4">
-                                <div className="relative flex ms-3 items-center gap-3">
+                            <div className="flex ms-auto sm:ms-6 items-center gap-2 sm:gap-4">
+                                <div className="relative flex items-center gap-2 sm:gap-3">
                                     {user.is_admin && (
                                         <PrimaryButton
                                             onClick={(ev) => {
                                                 setShowNewUserModal(true);
                                             }}
-                                            className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 border-none shadow-lg shadow-indigo-500/20 active:scale-95 transition-all py-2 font-bold"
+                                            className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 border-none shadow-lg shadow-indigo-500/20 active:scale-95 transition-all font-bold flex items-center justify-center"
                                         >
-                                            <UserPlusIcon className="h-4 w-4 mr-2" />
-                                            Add New User
+                                            <UserPlusIcon className="h-5 w-5 sm:h-4 sm:w-4" />
+                                            <span className="hidden sm:inline ms-2">
+                                                Add New User
+                                            </span>
                                         </PrimaryButton>
                                     )}
 
                                     <Dropdown>
                                         <Dropdown.Trigger>
-                                            <span className="inline-flex rounded-md">
+                                            <span className="hidden  sm:inline-flex rounded-md">
                                                 <button
                                                     type="button"
-                                                    className="inline-flex items-center rounded-lg border border-gray-300 dark:border-white/10 bg-white px-4 py-2 text-sm font-bold leading-4 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none dark:bg-[#1a1f2b] dark:text-gray-200 dark:hover:bg-[#242a38] dark:hover:text-white shadow-sm"
+                                                    className="inline-flex items-center rounded-lg border border-gray-300 dark:border-white/10 bg-white px-3 py-2 sm:px-4 text-sm font-bold leading-4 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none dark:bg-[#1a1f2b] dark:text-gray-200 dark:hover:bg-[#242a38] dark:hover:text-white shadow-sm"
                                                 >
-                                                    {user.name}
+                                                    <span className="max-w-[80px] sm:max-w-none truncate">
+                                                        {user.name}
+                                                    </span>
 
                                                     <svg
                                                         className="-me-0.5 ms-2 h-4 w-4 opacity-60"
@@ -178,7 +181,6 @@ export default function AuthenticatedLayout({ header, children }) {
                                     </Dropdown>
                                 </div>
                             </div>
-
                             <div className="-me-2 flex items-center sm:hidden">
                                 <button
                                     onClick={() =>
@@ -186,13 +188,14 @@ export default function AuthenticatedLayout({ header, children }) {
                                             (previousState) => !previousState,
                                         )
                                     }
-                                    className="inline-flex items-center justify-center rounded-xl p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:outline-none dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-200"
+                                    className="inline-flex items-center justify-center rounded-xl p-2.5 text-gray-500 transition-all duration-200 hover:bg-gray-100 focus:outline-none dark:text-gray-400 dark:hover:bg-white/10 active:scale-90"
                                 >
                                     <svg
-                                        className="h-7 w-7"
+                                        className="h-6 w-6"
                                         stroke="currentColor"
                                         fill="none"
                                         viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
                                     >
                                         <path
                                             className={
