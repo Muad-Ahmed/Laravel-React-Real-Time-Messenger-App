@@ -28,28 +28,33 @@ const ChatLayout = ({ children }) => {
     };
 
     const messageCreated = (message) => {
+        // mark last event (kept minimal): update local conversations immutably
         setLocalConversations((oldUsers) => {
             return oldUsers.map((u) => {
-                // If the message is for user
+                // direct user conversation
                 if (
                     message.receiver_id &&
                     !u.is_group &&
                     (u.id == message.sender_id || u.id == message.receiver_id)
                 ) {
-                    u.last_message = message.message;
-                    u.last_message_date = message.created_at;
-                    return u;
+                    return {
+                        ...u,
+                        last_message: message.message,
+                        last_message_date: message.created_at,
+                    };
                 }
 
-                // If the message is for group
+                // group conversation
                 if (
                     message.group_id &&
                     u.is_group &&
                     u.id == message.group_id
                 ) {
-                    u.last_message = message.message;
-                    u.last_message_date = message.created_at;
-                    return u;
+                    return {
+                        ...u,
+                        last_message: message.message,
+                        last_message_date: message.created_at,
+                    };
                 }
 
                 return u;
@@ -58,17 +63,24 @@ const ChatLayout = ({ children }) => {
     };
 
     const messageDeleted = ({ prevMessage }) => {
-        if (!prevMessage) {
-            return;
-        }
-        // Find the conversation by prevMessage and updated its last_message_id and date
+        if (!prevMessage) return;
+        // reuse messageCreated to update last_message_date back to prev
         messageCreated(prevMessage);
+    };
+
+    // Helper: normalize date/time values to numeric epoch for reliable comparison
+    const parseToEpoch = (v) => {
+        if (!v) return 0;
+        if (typeof v === "number") return v;
+        const s = String(v).replace(/\s+UTC$/, "");
+        const t = Date.parse(s);
+        return isNaN(t) ? 0 : t;
     };
 
     useEffect(() => {
         const offCreated = on("message.created", messageCreated);
         const offDeleted = on("message.deleted", messageDeleted);
-        const offModalShow = on("GroupModal.show", (group) => {
+        const offModalShow = on("GroupModal.show", () => {
             setShowGroupModal(true);
         });
 
@@ -96,35 +108,72 @@ const ChatLayout = ({ children }) => {
     }, [on]);
 
     useEffect(() => {
-        setSortedConversations(
-            localConversations.sort((a, b) => {
-                // 1. logic of sorting blocked chats
-                if (a.blocked_at && b.blocked_at) {
-                    return a.blocked_at > b.blocked_at ? 1 : -1;
-                } else if (a.blocked_at) {
-                    return 1;
-                } else if (b.blocked_at) {
-                    return -1;
-                }
+        // clone before sorting to avoid mutating original array
+        const arr = [...localConversations];
 
-                // 2. logic of sorting chats depending on last message
-                if (a.last_message_date && b.last_message_date) {
-                    return b.last_message_date.localeCompare(
-                        a.last_message_date,
-                    );
-                } else if (a.last_message_date) {
-                    return -1;
-                } else if (b.last_message_date) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }),
-        );
+        arr.sort((a, b) => {
+            // preserve blocked ordering logic
+            if (a.blocked_at && b.blocked_at) {
+                return a.blocked_at > b.blocked_at ? 1 : -1;
+            } else if (a.blocked_at) {
+                return 1;
+            } else if (b.blocked_at) {
+                return -1;
+            }
+
+            const getActivityEpoch = (c) =>
+                parseToEpoch(
+                    c.last_message_date ?? c.created_at ?? c.updated_at ?? null,
+                );
+
+            const aEpoch = getActivityEpoch(a);
+            const bEpoch = getActivityEpoch(b);
+
+            if (aEpoch && bEpoch) {
+                return bEpoch - aEpoch;
+            } else if (aEpoch) {
+                return -1;
+            } else if (bEpoch) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+
+        setSortedConversations(arr);
     }, [localConversations]);
 
     useEffect(() => {
-        setLocalConversations(conversations);
+        // Build local conversations using composite key (type + id) to avoid collisions
+        // Problem: merging by numeric `id` alone caused user/group ID collisions, copying timestamps incorrectly
+        
+        setLocalConversations((prev) => {
+            const newLocal = [];
+            const keyFor = (item) => `${item.is_group ? "g" : "u"}_${item.id}`;
+            const prevByKey = new Map(prev.map((p) => [keyFor(p), p]));
+
+            conversations.forEach((conv) => {
+                const existing = prevByKey.get(keyFor(conv));
+                const base = { ...conv };
+
+                if (!existing) {
+                    newLocal.push(base);
+                    return;
+                }
+
+                const existingEpoch = parseToEpoch(existing.last_message_date);
+                const serverEpoch = parseToEpoch(conv.last_message_date);
+
+                if (existingEpoch > serverEpoch) {
+                    base.last_message = existing.last_message;
+                    base.last_message_date = existing.last_message_date;
+                }
+
+                newLocal.push(base);
+            });
+
+            return newLocal;
+        });
     }, [conversations]);
 
     useEffect(() => {
@@ -189,6 +238,7 @@ const ChatLayout = ({ children }) => {
                             </button>
                         </div>
                     </div>
+
                     <div className="px-4 pb-4">
                         <TextInput
                             onKeyUp={onSearch}
@@ -196,16 +246,12 @@ const ChatLayout = ({ children }) => {
                             className="w-full bg-black/40 border-white/5 focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/20 rounded-xl py-2.5 px-4 text-sm text-gray-200 placeholder-gray-500 transition-all"
                         />
                     </div>
+
                     <div className="flex-1 overflow-auto px-2 space-y-1 scrollbar-thin scrollbar-thumb-white/10">
-                        {/* Here */}
                         {sortedConversations &&
                             sortedConversations.map((conversation) => (
                                 <div
-                                    key={`${
-                                        conversation.is_group
-                                            ? "group_"
-                                            : "user_"
-                                    }${conversation.id}`}
+                                    key={`${conversation.is_group ? "group_" : "user_"}${conversation.id}`}
                                     className="rounded-xl transition-colors hover:bg-white/5 border border-transparent hover:border-white/5 active:bg-white/[0.02]"
                                 >
                                     <ConversationItem
@@ -219,11 +265,12 @@ const ChatLayout = ({ children }) => {
                             ))}
                     </div>
                 </div>
-                {/* Main Chat Area: Slightly lighter than sidebar for distinction */}
+
                 <div className="flex-1 flex flex-col overflow-hidden bg-white/[0.01]">
                     {children}
                 </div>
             </div>
+
             <GroupModal
                 show={showGroupModal}
                 onClose={() => setShowGroupModal(false)}
