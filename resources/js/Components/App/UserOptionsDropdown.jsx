@@ -71,7 +71,10 @@ export default function UserOptionsDropdown({ conversation }) {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <MenuItems className="absolute right-0 mt-2 w-52 origin-top-right rounded-xl bg-gradient-to-b from-slate-800 to-slate-900 border border-white/[0.08] ring-1 ring-black shadow-[0_10px_40px_rgba(0,0,0,0.5)] z-50 focus:outline-none overflow-hidden">
+                    <MenuItems
+                        anchor="bottom end"
+                        className="w-52 [--anchor-gap:8px] rounded-xl bg-gradient-to-b from-slate-800 to-slate-900 border border-white/[0.08] shadow-[0_10px_40px_rgba(0,0,0,0.5)] z-50 focus:outline-none overflow-hidden transition duration-100 ease-out data-[closed]:scale-95 data-[closed]:opacity-0"
+                    >
                         <div className="p-1.5 space-y-0.5">
                             <MenuItem>
                                 {({ focus }) => (

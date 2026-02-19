@@ -53,6 +53,13 @@ export default function GroupModal({ show = false, onClose = () => {} }) {
 
     useEffect(() => {
         return on("GroupModal.show", (group) => {
+            if (!group) {
+                setGroup({});
+                reset(); 
+                return;
+            }
+
+            setGroup(group);
             setData({
                 name: group.name,
                 description: group.description,
@@ -60,7 +67,6 @@ export default function GroupModal({ show = false, onClose = () => {} }) {
                     .filter((u) => group.owner_id !== u.id)
                     .map((u) => u.id),
             });
-            setGroup(group);
         });
     }, [on]);
 

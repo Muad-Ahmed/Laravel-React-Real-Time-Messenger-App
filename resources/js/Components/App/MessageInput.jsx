@@ -163,7 +163,7 @@ const MessageInput = ({ conversation = null }) => {
                     </button>
                 </div>
 
-                {!!uploadProgress && (
+                {uploadProgress > 0 && chosenFiles.length > 0 && (
                     <progress
                         className="progress progress-info w-full h-1 shadow-glow"
                         value={uploadProgress}

@@ -3,26 +3,18 @@ export const formatMessageDateLong = (date) => {
     const inputDate = new Date(date);
 
     if (isToday(inputDate)) {
-        return inputDate.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-        });
-    } else if (isYesterday(inputDate)) {
-        return (
-            "Yesterday " +
-            inputDate.toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-            })
-        );
-    } else if (inputDate.getFullYear() === now.getFullYear()) {
-        return inputDate.toLocaleDateString([], {
-            day: "2-digit",
-            month: "short",
-        });
-    } else {
-        return inputDate.toLocaleDateString();
+        return formatTimeHM(inputDate);
     }
+
+    if (isYesterday(inputDate)) {
+        return `Yesterday ${formatTimeHM(inputDate)}`;
+    }
+
+    if (inputDate.getFullYear() === now.getFullYear()) {
+        return formatDateDM(inputDate);
+    }
+
+    return formatDateYMD(inputDate);
 };
 
 export const formatMessageDateShort = (date) => {
@@ -30,20 +22,18 @@ export const formatMessageDateShort = (date) => {
     const inputDate = new Date(date);
 
     if (isToday(inputDate)) {
-        return inputDate.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-        });
-    } else if (isYesterday(inputDate)) {
-        return "Yesterday";
-    } else if (inputDate.getFullYear() === now.getFullYear()) {
-        return inputDate.toLocaleDateString([], {
-            day: "2-digit",
-            month: "short",
-        });
-    } else {
-        return inputDate.toLocaleDateString();
+        return formatTimeHM(inputDate);
     }
+
+    if (isYesterday(inputDate)) {
+        return "Yesterday";
+    }
+
+    if (inputDate.getFullYear() === now.getFullYear()) {
+        return formatDateDM(inputDate);
+    }
+
+    return formatDateYMD(inputDate);
 };
 
 export const isToday = (date) => {
@@ -64,6 +54,24 @@ export const isYesterday = (date) => {
         date.getFullYear() === yesterday.getFullYear()
     );
 };
+const formatTimeHM = (date) => {
+    const h = String(date.getHours()).padStart(2, "0");
+    const m = String(date.getMinutes()).padStart(2, "0");
+    return `${h}:${m}`;
+};
+
+const formatDateDM = (date) => {
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = date.toLocaleString("en-US", { month: "short" });
+    return `${day} ${month}`;
+};
+
+const formatDateYMD = (date) => {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+    return `${y}/${m}/${d}`;
+};
 
 // For Attachments
 
@@ -79,7 +87,7 @@ export const formatBytes = (bytes, decimals = 2) => {
 
     let i = 0;
     let size = bytes;
-    
+
     while (size >= k) {
         size /= k;
         i++;
