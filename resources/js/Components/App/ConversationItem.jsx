@@ -66,7 +66,7 @@ const ConversationItem = ({
                         {conversation.name}
                     </h3>
                     {conversation.last_message_date && (
-                        <span className="text-[10px] text-nowrap font-medium text-gray-500 uppercase tracking-tighter">
+                        <span className="text-[10px] text-nowrap font-medium text-gray-500 capitalize tracking-tighter">
                             {formatMessageDateShort(
                                 conversation.last_message_date,
                             )}

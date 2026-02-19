@@ -30,7 +30,7 @@ const MessageItem = ({ message, attachmentClick }) => {
                 ) : (
                     ""
                 )}
-                <time className="text-[10px] font-medium opacity-50 ml-2 uppercase">
+                <time className="text-[10px] font-medium opacity-50 ml-2 capitalize">
                     {formatMessageDateLong(message.created_at)}
                 </time>
             </div>
