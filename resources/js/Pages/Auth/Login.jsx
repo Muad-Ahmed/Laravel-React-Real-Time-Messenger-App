@@ -24,7 +24,8 @@ export default function Login({ status, errorMessage, canResetPassword }) {
     return (
         <GuestLayout>
             <Head title="Log in" />
-{/* success message */}
+
+            {/* success message */}
             {status && (
                 <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-sm font-semibold text-emerald-600 dark:text-emerald-400 animate-in fade-in slide-in-from-top-1">
                     {status}
@@ -111,13 +112,26 @@ export default function Login({ status, errorMessage, canResetPassword }) {
                     )}
                 </div>
 
-                <div className="mt-8 ">
+                <div className="mt-8">
                     <PrimaryButton
-                        className="w-full justify-center py-3 !text-white  bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 border-none shadow-lg shadow-indigo-500/25 active:scale-[0.98] transition-all"
+                        className="w-full justify-center py-3 !text-white bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 border-none shadow-lg shadow-indigo-500/25 active:scale-[0.98] transition-all"
                         disabled={processing}
                     >
                         Sign in
                     </PrimaryButton>
+                </div>
+
+                {/* Sign Up Link */}
+                <div className=" pt-2 border-t border-slate-100 dark:border-slate-800 text-center">
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
+                        Don't have an account yet?{" "}
+                        <Link
+                            href={route("register")}
+                            className="font-bold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors underline-offset-4 hover:underline"
+                        >
+                            Create an account
+                        </Link>
+                    </p>
                 </div>
             </form>
         </GuestLayout>
