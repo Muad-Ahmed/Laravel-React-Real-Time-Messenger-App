@@ -22,7 +22,7 @@ jobs:
             set -e
 
             echo "🚀 Starting deployment..."
-
+            git config --global --add safe.directory /var/www/messenger
             cd /var/www/messenger
 
             echo "📥 Fetching latest code..."
