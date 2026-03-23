@@ -1,0 +1,59 @@
+name: Production Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script_stop: true
+          script: |
+            set -e
+
+            echo "🚀 Starting deployment..."
+
+            cd /var/www/messenger
+
+            echo "📥 Fetching latest code..."
+            git fetch --all
+
+            git checkout main
+
+            echo "📦 Installing PHP dependencies..."
+            composer install --no-dev --optimize-autoloader
+
+            echo "📦 Installing Node dependencies..."
+            npm ci
+
+            echo "⚙️ Building frontend..."
+            npm run build
+
+            echo "🧹 Clearing old caches..."
+            php artisan optimize:clear
+
+            echo "🗄️ Running migrations..."
+            php artisan migrate --force
+
+            echo "⚡ Caching configs..."
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+
+            echo "🔄 Restarting queue..."
+            php artisan queue:restart || true
+
+            echo "🔄 Restarting Reverb (Supervisor)..."
+            sudo supervisorctl restart messenger-reverb
+
+            echo "✅ Deployment completed successfully!"
