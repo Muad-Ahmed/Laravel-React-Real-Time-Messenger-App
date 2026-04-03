@@ -31,10 +31,8 @@ class MessageObserver
                     ->limit(1)
                     ->first();
 
-                if ($prevMessage) {
-                    $group->last_message_id = $prevMessage->id;
-                    $group->save();
-                }
+                $group->last_message_id = $prevMessage ? $prevMessage->id : null;
+                $group->save();
             }
         } else {
             $conversation = Conversation::where('last_message_id', $message->id)->first();
@@ -52,10 +50,8 @@ class MessageObserver
                     ->limit(1)
                     ->first();
 
-                if ($prevMessage) {
-                    $conversation->last_message_id = $prevMessage->id;
-                    $conversation->save();
-                }
+                $conversation->last_message_id = $prevMessage ? $prevMessage->id : null;
+                $conversation->save();
             }
         }
     }
