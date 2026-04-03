@@ -51,11 +51,10 @@ export default function AuthenticatedLayout({ header, children }) {
                         group_id: message.group_id,
                         message:
                             message.message ||
-                            `Shared ${
-                                message.attachments.length === 1
-                                    ? "an attachment"
-                                    : message.attachments.length +
-                                      " attachments"
+                            `Shared ${message.attachments.length === 1
+                                ? "an attachment"
+                                : message.attachments.length +
+                                " attachments"
                             }`,
                     });
                 });

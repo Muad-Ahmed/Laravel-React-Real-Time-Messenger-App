@@ -5,6 +5,7 @@ const NewMessageInput = ({ value, onChange, onSend }) => {
     const rafRef = useRef(null);
     const debounceRef = useRef(null);
     const roRef = useRef(null);
+    const lastHeightRef = useRef(0);
 
     const MAX_HEIGHT = 160; // px
 
@@ -18,14 +19,17 @@ const NewMessageInput = ({ value, onChange, onSend }) => {
             el.style.height = "auto";
 
             const scrollHeight = el.scrollHeight;
+            const newHeight = Math.min(scrollHeight, MAX_HEIGHT);
 
-            if (scrollHeight > MAX_HEIGHT) {
-                el.style.height = `${MAX_HEIGHT}px`;
-                el.style.overflowY = "auto";
-            } else {
-                el.style.height = `${scrollHeight}px`;
-                el.style.overflowY = "hidden";
+            if (lastHeightRef.current === newHeight) {
+                el.style.height = `${newHeight}px`;
+                return;
             }
+
+            lastHeightRef.current = newHeight;
+
+            el.style.height = `${newHeight}px`;
+            el.style.overflowY = scrollHeight > MAX_HEIGHT ? "auto" : "hidden";
         });
     };
 
@@ -51,7 +55,9 @@ const NewMessageInput = ({ value, onChange, onSend }) => {
         const el = inputRef.current;
         if (!el) return;
 
-        if (typeof ResizeObserver !== "undefined") {
+        const isMobile = window.innerWidth < 768;
+
+        if (!isMobile && typeof ResizeObserver !== "undefined") {
             roRef.current = new ResizeObserver(() => {
                 if (debounceRef.current) clearTimeout(debounceRef.current);
                 debounceRef.current = setTimeout(adjustHeight, 40);
