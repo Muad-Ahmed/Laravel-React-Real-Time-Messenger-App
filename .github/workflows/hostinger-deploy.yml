@@ -67,6 +67,6 @@ jobs:
             sudo supervisorctl restart messenger-reverb
 
             echo "Restarting Queue Worker (Supervisor)..."
-            sudo supervisorctl restart messenger-worker
+            sudo supervisorctl restart messenger-worker:*
 
             echo "Deployment completed successfully!"
