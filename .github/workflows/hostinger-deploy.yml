@@ -21,42 +21,52 @@ jobs:
           script: |
             set -e
 
-            echo "🚀 Starting deployment..."
+            echo "Starting deployment..."
             git config --global --add safe.directory /var/www/messenger
             cd /var/www/messenger
 
-            echo "📥 Fetching latest code..."
+            echo "Fetching latest code..."
             git fetch --all
 
             git checkout main
 
-            echo "📦 Installing PHP dependencies..."
+            echo "Installing PHP dependencies..."
             composer install --no-dev --optimize-autoloader
 
-            echo "📦 Installing Node dependencies..."
+            echo "Installing Node dependencies..."
             npm ci
 
-            echo "⚙️ Building frontend..."
+            echo "Building frontend..."
             npm run build
 
-            echo "🧹 Clearing old caches..."
+            echo "Clearing old caches..."
             php artisan optimize:clear
             
-            echo "🔗 Linking storage..."
+            echo "Linking storage..."
             php artisan storage:link || true
 
-            echo "🗄️ Running migrations..."
+            echo "Running migrations..."
             php artisan migrate --force
 
-            echo "⚡ Caching configs..."
+            echo "Caching configs..."
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
 
-            echo "🔄 Restarting queue..."
+            echo "Restarting queue..."
             php artisan queue:restart || true
 
-            echo "🔄 Restarting Reverb (Supervisor)..."
+            echo "Ensuring Supervisor is running..."
+            sudo systemctl start supervisor
+
+            echo "Reloading Supervisor config..."
+            sudo supervisorctl reread
+            sudo supervisorctl update
+
+            echo "Restarting Reverb (Supervisor)..."
             sudo supervisorctl restart messenger-reverb
 
-            echo "✅ Deployment completed successfully!"
+            echo "Restarting Queue Worker (Supervisor)..."
+            sudo supervisorctl restart messenger-worker
+
+            echo "Deployment completed successfully!"
