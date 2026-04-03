@@ -41,6 +41,24 @@ class DatabaseSeeder extends Seeder
 
         User::factory(10)->create();
 
+        $avatars = [
+            'avatars/user1.jpg',
+            'avatars/user2.jpg',
+            'avatars/user3.jpg',
+            'avatars/user4.jpg',
+        ];
+
+        shuffle($avatars);
+
+        $users = User::inRandomOrder()->limit(4)->get();
+
+        foreach ($users as $index => $user) {
+            $user->update([
+                'avatar' => $avatars[$index],
+            ]);
+        }        
+
+
         for ($i = 0; $i < 5; $i++) {
             $group = Group::factory()->create([
                 'owner_id' => 1,
