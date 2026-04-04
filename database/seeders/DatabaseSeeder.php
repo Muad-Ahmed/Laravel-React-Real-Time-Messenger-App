@@ -9,6 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
 
 class DatabaseSeeder extends Seeder
 {
@@ -40,6 +41,16 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory(10)->create();
+
+        // Copy seed images from the repo into storage so they exist on any server
+        $destPath = storage_path('app/public/avatars');
+        File::ensureDirectoryExists($destPath);
+        foreach (['user1.jpg', 'user2.jpg', 'user3.jpg', 'user4.jpg'] as $img) {
+            $src = database_path('seeders/images/' . $img);
+            if (File::exists($src)) {
+                File::copy($src, $destPath . '/' . $img);
+            }
+        }
 
         $avatars = [
             'avatars/user1.jpg',
