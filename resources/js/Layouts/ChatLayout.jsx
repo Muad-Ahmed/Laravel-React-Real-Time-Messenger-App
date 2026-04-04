@@ -146,7 +146,7 @@ const ChatLayout = ({ children }) => {
     useEffect(() => {
         // Build local conversations using composite key (type + id) to avoid collisions
         // Problem: merging by numeric `id` alone caused user/group ID collisions, copying timestamps incorrectly
-
+        
         setLocalConversations((prev) => {
             const newLocal = [];
             const keyFor = (item) => `${item.is_group ? "g" : "u"}_${item.id}`;
@@ -214,9 +214,10 @@ const ChatLayout = ({ children }) => {
         <>
             <div className="flex-1 w-full flex overflow-hidden bg-slate-900">
                 <div
-                    className={`transition-[margin,width] duration-300 w-full sm:w-[240px] md:w-[320px] bg-white/[0.02] border-r border-indigo-500/30 lg:shadow-[1px_0_15px_-4px_rgba(99,102,241,0.2)]
-                    flex flex-col overflow-hidden ${selectedConversation ? "-ml-[100%] sm:ml-0" : ""
-                        }`}
+                    className={`transition-all duration-300 w-full sm:w-[240px] md:w-[320px] bg-white/[0.02] border-r border-indigo-500/30 shadow-[1px_0_15px_-4px_rgba(99,102,241,0.2)]
+                    flex flex-col overflow-hidden ${
+                        selectedConversation ? "-ml-[100%] sm:ml-0" : ""
+                    }`}
                 >
                     <div className="flex items-center justify-between py-5 px-5">
                         <h2 className="text-2xl font-black text-white tracking-tight drop-shadow-lg">

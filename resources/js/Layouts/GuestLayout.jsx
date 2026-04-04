@@ -14,11 +14,11 @@ export default function GuestLayout({ children }) {
     }, []);
 
     return (
-        <div className="flex min-h-dvh w-full flex-col bg-gray-50 dark:bg-gradient-to-br dark:from-[#0f172a] dark:to-[#1e293b] selection:bg-indigo-500 selection:text-white">
+        <div className="flex min-h-screen w-full flex-col bg-gray-50 dark:bg-gradient-to-br dark:from-[#0f172a] dark:to-[#1e293b] selection:bg-indigo-500 selection:text-white">
             <div className="flex flex-1 flex-col lg:flex-row items-center lg:justify-center gap-10 w-full max-w-7xl mx-auto p-6 py-12">
                 {/*instructions section*/}
                 <div className="w-full lg:w-[30rem] animate-in fade-in slide-in-from-top-6 lg:slide-in-from-left-6 duration-1000 order-1">
-                    <div className="p-6 rounded-[2rem] bg-indigo-500/[0.03] border border-indigo-500/10 lg:backdrop-blur-md dark:bg-indigo-400/[0.03] dark:border-indigo-400/10 shadow-lg lg:shadow-xl">
+                    <div className="p-6 rounded-[2rem] bg-indigo-500/[0.03] border border-indigo-500/10 backdrop-blur-md dark:bg-indigo-400/[0.03] dark:border-indigo-400/10 shadow-xl">
                         <div className="flex items-start gap-4">
                             <div className="p-2 rounded-xl bg-indigo-500/10 text-indigo-500 dark:text-indigo-400 shadow-inner flex-shrink-0 mt-1">
                                 <svg
@@ -72,13 +72,13 @@ export default function GuestLayout({ children }) {
 
                 {/* login section*/}
                 <div className="flex flex-col items-center w-full sm:max-w-md animate-in fade-in zoom-in-95 duration-700 order-2">
-                    <div className="transition-transform hidden lg:block duration-700 hover:scale-110 mb-6 drop-shadow-xl lg:drop-shadow-2xl">
+                    <div className="transition-transform  hidden lg:block duration-700 hover:scale-110 mb-6 drop-shadow-2xl">
                         <Link href="/">
                             <ApplicationLogo className="h-16 w-16 fill-current text-indigo-600 dark:text-indigo-400" />
                         </Link>
                     </div>
 
-                    <div className="w-full bg-white px-8 pt-10 pb-8 shadow-[0_20px_40px_rgba(0,0,0,0.1)] lg:shadow-[0_30px_60px_rgba(0,0,0,0.12)] rounded-[2.5rem] dark:bg-[#1e293b]/60 dark:shadow-[0_30px_60px_rgba(0,0,0,0.4)] dark:border dark:border-white/[0.05] dark:ring-1 dark:ring-white/[0.1] lg:backdrop-blur-xl">
+                    <div className="w-full bg-white px-8 pt-10 pb-8 shadow-[0_30px_60px_rgba(0,0,0,0.12)] rounded-[2.5rem] dark:bg-[#1e293b]/60 dark:shadow-[0_30px_60px_rgba(0,0,0,0.4)] dark:border dark:border-white/[0.05] dark:ring-1 dark:ring-white/[0.1] backdrop-blur-xl">
                         <div className="relative z-10">{children}</div>
                     </div>
                 </div>

@@ -37,10 +37,10 @@ const MessageItem = ({ message, attachmentClick }) => {
 
             <div
                 className={
-                    "chat-bubble relative border-t border-white/10 lg:shadow-lg " +
+                    "chat-bubble relative border-t border-white/10 shadow-lg " +
                     (message.sender_id === currentUser.id
-                        ? "chat-bubble-info bg-[#00b6ff] lg:bg-gradient-to-br lg:from-[#00b6ff] lg:to-[#00b6ff]/90 sm:text-[16.5px]"
-                        : "bg-[#273246] lg:bg-gradient-to-b lg:from-[#2d3a54] lg:to-[#273246] text-white lg:shadow-black/20 border-l border-white/5")
+                        ? "chat-bubble-info bg-gradient-to-br from-[#00b6ff] to-[#00b6ff]/90  sm:text-[16.5px]  shadow-info/20"
+                        : "bg-[#273246] bg-gradient-to-b from-[#2d3a54] to-[#273246  text-white shadow-black/20 border-l border-white/5")
                 }
             >
                 {message.sender_id == currentUser.id && (

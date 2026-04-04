@@ -17,7 +17,7 @@ export default function AttachmentPreviewModal({
     attachments,
     index,
     show = false,
-    onClose = () => { },
+    onClose = () => {},
 }) {
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -104,13 +104,13 @@ export default function AttachmentPreviewModal({
 
                                     {currentIndex <
                                         previewableAttachments.length - 1 && (
-                                            <div
-                                                onClick={next}
-                                                className="absolute opacity-100 text-gray-100 cursor-pointer flex items-center justify-center w-16 h-16 right-4 top-1/2 -translate-y-1/2 rounded-full bg-black/50 z-30"
-                                            >
-                                                <ChevronRightIcon className="w-12" />
-                                            </div>
-                                        )}
+                                        <div
+                                            onClick={next}
+                                            className="absolute opacity-100 text-gray-100 cursor-pointer flex items-center justify-center w-16 h-16 right-4 top-1/2 -translate-y-1/2 rounded-full bg-black/50 z-30"
+                                        >
+                                            <ChevronRightIcon className="w-12" />
+                                        </div>
+                                    )}
                                     {attachment && (
                                         /* Container */
                                         <div className="flex items-center justify-center w-full h-full p-3">
