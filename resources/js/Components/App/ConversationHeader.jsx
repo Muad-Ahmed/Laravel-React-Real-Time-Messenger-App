@@ -35,7 +35,7 @@ const ConversationHeader = ({ selectedConversation }) => {
     return (
         <>
             {selectedConversation && (
-                <div className="px-2 sm:px-4 py-2 flex justify-between items-center border-b border-white/[0.05] bg-gradient-to-b from-slate-800/50 to-slate-900/80 shadow-lg min-w-0">
+                <div className="px-2 sm:px-4 py-2 flex justify-between items-center border-b border-white/[0.05] bg-slate-900 lg:bg-gradient-to-b lg:from-slate-800/50 lg:to-slate-900/80 shadow-md lg:shadow-lg min-w-0">
                     <div className="flex items-center gap-2 sm:gap-4 min-w-0 ">
                         <Link
                             href={route("dashboard")}
@@ -44,7 +44,7 @@ const ConversationHeader = ({ selectedConversation }) => {
                             <ArrowLeftIcon className="w-6 sm:w-7" />
                         </Link>
                         {selectedConversation.is_user && (
-                            <div className="ring-2 ring-indigo-500/20 rounded-full p-0.5 flex-shrink-0">
+                            <div className="ring-2 max-h-11 ring-indigo-500/20 rounded-full p-0.5 flex-shrink-0">
                                 <UserAvatar user={selectedConversation} />
                             </div>
                         )}

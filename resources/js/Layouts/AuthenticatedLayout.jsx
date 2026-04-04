@@ -94,8 +94,8 @@ export default function AuthenticatedLayout({ header, children }) {
 
     return (
         <>
-            <div className="min-h-screen bg-gray-50 dark:bg-[#0b0e14] flex flex-col h-screen transition-colors duration-500">
-                <nav className="border-b border-gray-200 bg-white/90 dark:border-white/[0.05] dark:bg-[#11141d]/80 sticky top-0 z-50">
+            <div className="min-h-dvh bg-gray-50 dark:bg-[#0b0e14] flex flex-col h-dvh transition-colors duration-500">
+                <nav className="border-b border-gray-200 bg-white/95 dark:border-white/[0.05] dark:bg-[#11141d]/90 lg:backdrop-blur-md sticky top-0 z-50">
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div className="flex h-16 justify-between gap-1">
                             <div className="flex">
@@ -125,7 +125,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                             onClick={(ev) => {
                                                 setShowNewUserModal(true);
                                             }}
-                                            className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 border-none shadow-lg shadow-indigo-500/20 active:scale-95 transition-all font-bold flex items-center justify-center"
+                                            className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 border-none shadow-md lg:shadow-lg lg:shadow-indigo-500/20 active:scale-95 transition-[transform,shadow] font-bold flex items-center justify-center"
                                         >
                                             <UserPlusIcon className="h-5 w-5 sm:h-4 sm:w-4" />
                                             <span className="hidden sm:inline ms-2">
@@ -271,7 +271,7 @@ export default function AuthenticatedLayout({ header, children }) {
                 </nav>
 
                 {header && (
-                    <header className="bg-white/50 shadow-sm border-b border-gray-100 dark:bg-[#11141d]/50 dark:border-white/[0.03] backdrop-blur-sm">
+                    <header className="bg-white/50 shadow-sm border-b border-gray-100 dark:bg-[#11141d]/50 dark:border-white/[0.03] lg:backdrop-blur-sm">
                         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                             <div className="text-xl font-extrabold tracking-tight text-gray-900 dark:text-white">
                                 {header}

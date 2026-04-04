@@ -151,7 +151,7 @@ function MobileUserActions({
     return (
         <div className="fixed inset-0 z-50 flex items-end">
             <div
-                className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                className="absolute inset-0 bg-black/80 lg:backdrop-blur-sm"
                 onClick={onClose}
             />
             <div className="relative w-full rounded-t-2xl bg-slate-900 border-t border-white/10 p-4 pb-8 animate-in slide-in-from-bottom duration-300">

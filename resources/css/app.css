@@ -3,25 +3,38 @@
 @tailwind utilities;
 
 #app {
-    height: 100vh;
+    height: 100dvh;
 }
 
 /* Emoji Picker Customization */
 .EmojiPickerReact.epr-dark-theme {
-    background-color: theme("colors.slate.900/95%");
-    backdrop-filter: blur(8px);
-    border: 1px solid theme("colors.white/8%");
-    border-radius: 1.25rem; /* rounded-2xl */
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    background-color: theme("colors.slate.950"); /* Solid for mobile */
+    border: 1px solid theme("colors.white/10");
+    border-radius: 1.25rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+@media (min-width: 1024px) {
+    .EmojiPickerReact.epr-dark-theme {
+        background-color: theme("colors.slate.900/95%");
+        backdrop-filter: blur(12px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
 }
 
 .EmojiPickerReact.epr-dark-theme .epr-emoji-category-label {
-    background-color: theme("colors.slate.800/80%");
-    backdrop-filter: blur(4px);
+    background-color: theme("colors.slate.800");
     color: theme("colors.emerald.400");
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+}
+
+@media (min-width: 1024px) {
+    .EmojiPickerReact.epr-dark-theme .epr-emoji-category-label {
+        background-color: theme("colors.slate.800/80%");
+        backdrop-filter: blur(4px);
+    }
 }
 
 /* Avatar Indicators (Online/Offline) */
@@ -30,13 +43,25 @@
     right: 2%;
     width: 9px;
     height: 9px;
-    background-color: #10b981; /* Emerald */
+    background-color: #10b981;
     outline: 2.5px solid theme("colors.slate.950");
-    box-shadow: 0 0 12px rgba(16, 185, 129, 0.8);
-    animation: status-pulse 2s infinite;
+    box-shadow: none;
+    animation: status-pulse-mobile 2s infinite;
 }
 
-@keyframes status-pulse {
+@media (min-width: 1024px) {
+    .avatar.online:before {
+        box-shadow: 0 0 12px rgba(16, 185, 129, 0.8);
+        animation: status-pulse-desktop 2s infinite;
+    }
+}
+
+@keyframes status-pulse-mobile {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes status-pulse-desktop {
     0% {
         box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
     }
@@ -60,45 +85,45 @@
 }
 
 /* Markdown */
-.chat-message-content > blockquote,
-.chat-message-content > dl,
-.chat-message-content > dd,
-.chat-message-content > h1,
-.chat-message-content > h2,
-.chat-message-content > h3,
-.chat-message-content > h4,
-.chat-message-content > h5,
-.chat-message-content > h6,
-.chat-message-content > hr,
-.chat-message-content > figure,
-.chat-message-content > p,
-.chat-message-content > pre {
+.chat-message-content>blockquote,
+.chat-message-content>dl,
+.chat-message-content>dd,
+.chat-message-content>h1,
+.chat-message-content>h2,
+.chat-message-content>h3,
+.chat-message-content>h4,
+.chat-message-content>h5,
+.chat-message-content>h6,
+.chat-message-content>hr,
+.chat-message-content>figure,
+.chat-message-content>p,
+.chat-message-content>pre {
     margin-top: 0;
     margin-bottom: 5px;
 }
 
-.chat-message-content > h1,
-.chat-message-content > h2,
-.chat-message-content > h3,
-.chat-message-content > h4,
-.chat-message-content > h5,
-.chat-message-content > h6 {
+.chat-message-content>h1,
+.chat-message-content>h2,
+.chat-message-content>h3,
+.chat-message-content>h4,
+.chat-message-content>h5,
+.chat-message-content>h6 {
     font-size: revert;
     font-weight: revert;
 }
 
-.chat-message-content > ol,
-.chat-message-content > ul {
+.chat-message-content>ol,
+.chat-message-content>ul {
     list-style: revert;
     margin: revert;
     padding: revert;
 }
 
-.chat-message-content > table {
+.chat-message-content>table {
     border-collapse: revert;
 }
 
-.chat-message-content > blockquote {
+.chat-message-content>blockquote {
     border-left: 5px solid #ccc;
     font-style: italic;
     margin-left: 0;
@@ -113,11 +138,11 @@
     color: rgb(246, 246, 246);
 }
 
-.chat-message-content > :first-child {
+.chat-message-content> :first-child {
     margin-top: 0;
 }
 
-.chat-message-content > :last-child {
+.chat-message-content> :last-child {
     margin-bottom: 0;
 }
 

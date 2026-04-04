@@ -163,15 +163,15 @@ function Home({ selectedConversation = null, messages = null }) {
         <>
             {!messages && (
                 /* Empty state */
-                <div className="flex flex-col justify-center items-center text-center h-full relative overflow-hidden bg-slate-950/20 backdrop-blur-sm">
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none" />
-                    <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none" />
+                <div className="flex flex-col justify-center items-center text-center h-full relative overflow-hidden bg-slate-950/20 lg:backdrop-blur-sm">
+                    <div className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none" />
+                    <div className="hidden lg:block absolute bottom-0 right-0 w-[300px] h-[300px] bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none" />
 
                     <div className="relative z-10 flex flex-col items-center max-w-md px-6">
                         <div className="relative mb-8 group">
-                            <div className="absolute inset-0 bg-indigo-500/20 blur-2xl rounded-full group-hover:bg-indigo-500/30 transition-all duration-500" />
-                            <div className="relative bg-gradient-to-b from-white/10 to-white/[0.02] p-8 rounded-[2.5rem] border border-white/10 shadow-2xl backdrop-blur-md">
-                                <ChatBubbleLeftRightIcon className="w-20 h-20 text-indigo-400 drop-shadow-[0_0_15px_rgba(129,140,248,0.5)]" />
+                            <div className="hidden lg:block absolute inset-0 bg-indigo-500/20 blur-2xl rounded-full group-hover:bg-indigo-500/30 transition-opacity duration-500" />
+                            <div className="relative bg-gradient-to-b from-white/10 to-white/[0.02] p-8 rounded-[2.5rem] border border-white/10 shadow-xl lg:shadow-2xl lg:backdrop-blur-md">
+                                <ChatBubbleLeftRightIcon className="w-20 h-20 text-indigo-400 lg:drop-shadow-[0_0_15px_rgba(129,140,248,0.5)]" />
                             </div>
                         </div>
 

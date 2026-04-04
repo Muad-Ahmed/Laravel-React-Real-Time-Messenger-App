@@ -17,9 +17,8 @@ const MessageAttachments = ({ attachments, attachmentClick }) => {
                             className={
                                 `group flex flex-col items-center justify-center 
                                 text-slate-300 relative cursor-pointer rounded-xl 
-                                 border border-white/10 shadow-md 
-                                transition-all duration-200 hover:shadow-xl hover:border-white/20 ` +
-                                (isAudio(attachment)
+                                 border border-white/10 lg:shadow-md 
+                                transition-[shadow,border] duration-200 lg:hover:shadow-xl hover:border-white/20 ` +                                (isAudio(attachment)
                                     ? "w-72 sm:w-80 bg-transparent "
                                     : "w-32 aspect-square bg-slate-700/40 overflow-hidden")
                             }
@@ -31,10 +30,10 @@ const MessageAttachments = ({ attachments, attachmentClick }) => {
                                     onClick={(ev) => ev.stopPropagation()}
                                     download
                                     href={attachment.url}
-                                    className="z-30 opacity-0 group-hover:opacity-100 transition-all duration-300 
+                                    className="z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 
                                             w-9 h-9 flex items-center justify-center text-white 
-                                            bg-black/60 backdrop-blur-sm rounded-bl-xl absolute right-0 top-0 
-                                            cursor-pointer hover:bg-black/80 border-l border-b border-white/10"
+                                            bg-black/70 lg:backdrop-blur-sm rounded-bl-xl absolute right-0 top-0 
+                                            cursor-pointer hover:bg-black/90 border-l border-b border-white/10"
                                 >
                                     <ArrowDownTrayIcon className="w-5 h-5" />
                                 </a>

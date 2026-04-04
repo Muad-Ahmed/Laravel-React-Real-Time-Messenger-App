@@ -15,20 +15,10 @@ const ConversationItem = ({
 
     if (selectedConversation) {
         if (
-            !selectedConversation.is_group &&
-            !conversation.is_group &&
             selectedConversation.id == conversation.id
         ) {
             classes =
-                "border-indigo-500 bg-indigo-500/10 shadow-[inset_4px_0_15px_-5px_rgba(99,102,241,0.4)]";
-        }
-        if (
-            selectedConversation.is_group &&
-            conversation.is_group &&
-            selectedConversation.id == conversation.id
-        ) {
-            classes =
-                "border-indigo-500 bg-indigo-500/10 shadow-[inset_4px_0_15px_-5px_rgba(99,102,241,0.4)]";
+                "border-indigo-500 bg-indigo-500/10 lg:shadow-[inset_4px_0_15px_-5px_rgba(99,102,241,0.4)]";
         }
     }
 
@@ -41,7 +31,7 @@ const ConversationItem = ({
             }
             preserveState
             className={
-                "conversation-item flex items-center gap-3 p-3 text-gray-400 transition-all duration-300 cursor-pointer border-l-[3px] hover:bg-white/[0.05] " +
+                "conversation-item flex items-center gap-3 p-3 text-gray-400 transition-colors duration-200 cursor-pointer border-l-[3px] hover:bg-white/[0.05] " +
                 classes +
                 (conversation.is_user && currentUser.is_admin
                     ? " pr-2"
