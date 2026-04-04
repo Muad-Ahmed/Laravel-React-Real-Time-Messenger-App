@@ -44,7 +44,7 @@ const ConversationHeader = ({ selectedConversation }) => {
                             <ArrowLeftIcon className="w-6 sm:w-7" />
                         </Link>
                         {selectedConversation.is_user && (
-                            <div className="ring-2 ring-indigo-500/20 rounded-full p-0.5 flex-shrink-0">
+                            <div className="ring-2 max-h-11 ring-indigo-500/20 rounded-full p-0.5 flex-shrink-0">
                                 <UserAvatar user={selectedConversation} />
                             </div>
                         )}
